@@ -1,2 +1,3 @@
 src/main/resources/com/yuvalshavit/effes/parser/*.java
 src/main/resources/com/yuvalshavit/effes/parser/*.tokens
+*.class
