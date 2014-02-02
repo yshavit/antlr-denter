@@ -14,10 +14,27 @@
 
   <dependencies>
     <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>16.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-library</artifactId>
+      <version>1.3</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.antlr</groupId>
       <artifactId>antlr4-runtime</artifactId>
       <version>4.0</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>6.8.7</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -62,7 +79,7 @@
         <artifactId>antlr4-maven-plugin</artifactId>
         <version>4.0</version>
         <configuration>
-          <sourceDirectory>src</sourceDirectory>
+          <sourceDirectory>src/main/resources</sourceDirectory>
         </configuration>
         <executions>
           <execution>
