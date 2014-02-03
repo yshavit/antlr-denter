@@ -26,11 +26,11 @@ public final class DenterHelper {
 
   public Token nextToken() {
     Token t;
-    if (nextNonNL != null) {
+    if (!dentsBuffer.isEmpty()) {
+      t = dentsBuffer.remove();
+    } else if (nextNonNL != null) {
       t = nextNonNL;
       nextNonNL = null;
-    } else if (!dentsBuffer.isEmpty()) {
-      t = dentsBuffer.remove();
     } else {
       t = tokens.get();
     }
