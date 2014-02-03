@@ -90,11 +90,11 @@ public final class DenterHelper {
     // (This will probably cause a parse error, but that's not our concern!)
 
     while (true) {
-      tokensBuffer.add(createToken(dedentToken, copyFrom));
       int prevIndent = indentations.pop(); // throwing NoSuchElementException indicates a bug in this class
       if (prevIndent == targetIndent) {
         break;
       }
+      tokensBuffer.add(createToken(dedentToken, copyFrom));
       if (targetIndent > prevIndent) {
         // "weird" condition above
         tokensBuffer.add(createToken(indentToken, copyFrom));
