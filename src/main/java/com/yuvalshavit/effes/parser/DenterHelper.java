@@ -15,7 +15,6 @@ public final class DenterHelper {
   private final int nlToken;
   private final int indentToken;
   private final int dedentToken;
-  private Token nextNonNL;
 
   public DenterHelper(Supplier<Token> tokens, int nlToken, int indentToken, int dedentToken) {
     this.tokens = tokens;
@@ -26,13 +25,15 @@ public final class DenterHelper {
 
   public Token nextToken() {
     initIfFirstRun();
-    Token t = pullNextToken();
+    Token t = dentsBuffer.isEmpty()
+      ? tokens.get()
+      : dentsBuffer.remove();
     final Token r;
     if (t.getType() == nlToken) {
       r = handleNewlineToken(t);
     } else if (t.getType() == Token.EOF && indentations.size() > 1) {
       r = unwindTo(0, t);
-      nextNonNL = t;
+      dentsBuffer.add(t);
     } else {
       r = t;
     }
@@ -50,25 +51,12 @@ public final class DenterHelper {
       }
       while(firstRealToken.getType() == nlToken);
 
-      nextNonNL = firstRealToken;
       if (firstRealToken.getCharPositionInLine() > 0) {
         indentations.push(firstRealToken.getCharPositionInLine());
         dentsBuffer.add(createToken(indentToken, firstRealToken));
       }
+      dentsBuffer.add(firstRealToken);
     }
-  }
-
-  private Token pullNextToken() {
-    Token t;
-    if (!dentsBuffer.isEmpty()) {
-      t = dentsBuffer.remove();
-    } else if (nextNonNL != null) {
-      t = nextNonNL;
-      nextNonNL = null;
-    } else {
-      t = tokens.get();
-    }
-    return t;
   }
 
   private Token handleNewlineToken(Token t) {
@@ -78,8 +66,7 @@ public final class DenterHelper {
       t = nextNext;
       nextNext = tokens.get();
     }
-    // nextNext is now a non-NL token; queue it up for the next call to this method
-    nextNonNL = nextNext;
+    // nextNext is now a non-NL token; we'll queue it up after any possible dents
 
     String nlText = t.getText();
     int indent = nlText.length() - 1; // every NL has one \n char, so shorten the length to account for it
@@ -96,6 +83,7 @@ public final class DenterHelper {
     } else {
       r = unwindTo(indent, t);
     }
+    dentsBuffer.add(nextNext);
     return r;
   }
 
