@@ -112,18 +112,28 @@ public final class DenterHelperTest {
   }
 
   @Test
-  public void todo() {
-    // data-driven. File should should be just spaces, newlines, and N or R for the line end.
-    // N means just \n, R means \r\n.
-    // Output should be something like: "INDENT INDENT OUTDENT INDENT"
-    // Don't forget to test files that start off with an indentation! Also files that start with several newlines,
-    // possibly with indentations
-    // Also test blank lines (not ending in N or R).
-    throw new AssertionError();
+  public void halfDent() {
+    TokenChecker
+      .of("hello")
+      .nl("     world")
+      .nl("  boom")
+      .raw(NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN)
+      .dented(NORMAL, INDENT, NORMAL, DEDENT, INDENT, NORMAL, DEDENT, EOF_TOKEN);
+  }
+
+  @Test
+  public void withReturn() {
+    TokenChecker
+      .of("hello")
+      .nl("world")
+      .rf("dolly")
+      .raw(NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN)
+      .dented(NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN);
   }
 
   private interface TokenBuilder {
     TokenBuilder nl(String line);
+    TokenBuilder rf(String line);
     DentChecker raw(TokenType... expected);
   }
 
@@ -152,6 +162,12 @@ public final class DenterHelperTest {
     @Override
     public TokenBuilder nl(String line) {
       tokenize("\n", line);
+      return this;
+    }
+
+    @Override
+    public TokenBuilder rf(String line) {
+      tokenize("\r\n", line);
       return this;
     }
 

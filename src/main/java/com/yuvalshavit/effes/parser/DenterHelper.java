@@ -123,12 +123,13 @@ public final class DenterHelper {
       if (prevIndent == targetIndent) {
         break;
       }
-      dentsBuffer.add(createToken(dedentToken, copyFrom));
       if (targetIndent > prevIndent) {
         // "weird" condition above
+        indentations.push(prevIndent); // restore previous indentation, since we've indented from it
         dentsBuffer.add(createToken(indentToken, copyFrom));
         break;
       }
+      dentsBuffer.add(createToken(dedentToken, copyFrom));
     }
     indentations.push(targetIndent);
     return dentsBuffer.remove();
