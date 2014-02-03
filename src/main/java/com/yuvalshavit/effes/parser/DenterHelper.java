@@ -35,7 +35,7 @@ public final class DenterHelper {
       t = tokens.get();
     }
     if (indentations.isEmpty()) {
-      indentations.push(t.getCharPositionInLine());
+      return firstInvocation(t); // TODO this needs to be carefully placed do to the double nature of the "indentations" arg. Add an explicit firstInvocation bool.
     }
     final Token r;
     if (t.getType() == nlToken) {
@@ -46,10 +46,13 @@ public final class DenterHelper {
         nextNext = tokens.get();
       }
       // nextNext is now a non-NL token; queue it up for the next call to this method
+      if (nextNext.getType() == Token.EOF) {
+        return unwindAll(nextNext);
+      }
       nextNonNL = nextNext;
 
       String nlText = t.getText();
-      int indent = nlText.length() - 1; // evern NL has one \n char, so shorten the length to account for it
+      int indent = nlText.length() - 1; // every NL has one \n char, so shorten the length to account for it
       if (indent > 0 && nlText.charAt(0) == '\r') {
         --indent; // If the NL also has a \r char, we should account for that as well
       }
@@ -63,12 +66,21 @@ public final class DenterHelper {
         r = unwindTo(indent, t);
       }
     } else if (t.getType() == Token.EOF && indentations.size() > 1) {
-      r = unwindTo(0, t);
-      nextNonNL = t; // still need the EOF after the unwinds!
+      r = unwindAll(t);
     } else {
       r = t;
     }
     return r;
+  }
+
+  private Token firstInvocation(Token t) {
+    // look for the first non-NL
+    while(t.getType() == nlToken) {
+      t = tokens.get();
+    }
+    int pos = t.getCharPositionInLine();
+    indentations.push(pos);
+    return t;
   }
 
   private Token createToken(int tokenType, Token copyFrom) {
@@ -81,7 +93,7 @@ public final class DenterHelper {
    * Returns a DEDENT token, and also queues up additional DEDENTS as necessary.
    * @param targetIndent the "size" of the indentation (number of spaces) by the end
    * @param copyFrom the triggering token
-   * @return a DEDENT token, unless the indentation level is already okay
+   * @return a DEDENT token
    */
   private Token unwindTo(int targetIndent, Token copyFrom) {
     assert dentsBuffer.isEmpty() : dentsBuffer;
@@ -100,7 +112,14 @@ public final class DenterHelper {
     // (This will probably cause a parse error, but that's not our concern!)
 
     while (true) {
-      int prevIndent = indentations.pop(); // throwing NoSuchElementException indicates a bug in this class
+      int prevIndent = indentations.isEmpty()
+        ? -1
+        :indentations.pop();
+      if (prevIndent < 0) {
+        // "negative" dedent -- put this as the new baseline and we're done.
+        // (The "put" for new baseline is after the loop.)
+        break;
+      }
       if (prevIndent == targetIndent) {
         break;
       }
@@ -112,6 +131,22 @@ public final class DenterHelper {
       }
     }
     indentations.push(targetIndent);
+    return dentsBuffer.remove();
+  }
+
+  /**
+   * Simpler version of {@link #unwindTo(int, Token)}, which assumes we're just unwinding to the end. This way we
+   * don't have to worry about "negative" dedents.
+   * @param copyFrom the triggering token
+   * @return a dedent token
+   */
+  private Token unwindAll(Token copyFrom) {
+    assert dentsBuffer.isEmpty() : dentsBuffer;
+    for (int i = 0, len=indentations.size() - 1; i < len; ++i) { // -1 because the first indentation is baseline
+      dentsBuffer.add(createToken(dedentToken, copyFrom));
+    }
+    indentations.clear();
+    dentsBuffer.add(copyFrom);
     return dentsBuffer.remove();
   }
 }

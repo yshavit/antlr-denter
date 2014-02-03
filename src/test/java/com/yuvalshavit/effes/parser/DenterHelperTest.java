@@ -101,6 +101,17 @@ public final class DenterHelperTest {
   }
 
   @Test
+  public void dedentToNegative() {
+    // this shouldn't explode, it should just result in an extra dedent
+    TokenChecker
+      .of("    hello")
+      .nl("    world")
+      .nl("boom")
+      .raw(NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN)
+      .dented(NORMAL, NL, NORMAL, DEDENT, NORMAL, EOF_TOKEN);
+  }
+
+  @Test
   public void todo() {
     // data-driven. File should should be just spaces, newlines, and N or R for the line end.
     // N means just \n, R means \r\n.
