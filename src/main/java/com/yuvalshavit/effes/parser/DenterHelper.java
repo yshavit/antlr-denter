@@ -9,7 +9,7 @@ import java.util.Deque;
 import java.util.Queue;
 
 public final class DenterHelper {
-  private final Queue<Token> tokensBuffer = new ArrayDeque<>();
+  private final Queue<Token> dentsBuffer = new ArrayDeque<>();
   private final Deque<Integer> indentations = new ArrayDeque<>();
   private final Supplier<Token> tokens;
   private final int nlToken;
@@ -29,8 +29,8 @@ public final class DenterHelper {
     if (nextNonNL != null) {
       t = nextNonNL;
       nextNonNL = null;
-    } else if (!tokensBuffer.isEmpty()) {
-      t = tokensBuffer.remove();
+    } else if (!dentsBuffer.isEmpty()) {
+      t = dentsBuffer.remove();
     } else {
       t = tokens.get();
     }
@@ -84,7 +84,7 @@ public final class DenterHelper {
    * @return a DEDENT token, unless the indentation level is already okay
    */
   private Token unwindTo(int targetIndent, Token copyFrom) {
-    assert tokensBuffer.isEmpty() : tokensBuffer;
+    assert dentsBuffer.isEmpty() : dentsBuffer;
     // To make things easier, we'll queue up ALL of the dedents, and then pop off the first one.
     // For example, here's how some text is analyzed:
     //
@@ -104,14 +104,14 @@ public final class DenterHelper {
       if (prevIndent == targetIndent) {
         break;
       }
-      tokensBuffer.add(createToken(dedentToken, copyFrom));
+      dentsBuffer.add(createToken(dedentToken, copyFrom));
       if (targetIndent > prevIndent) {
         // "weird" condition above
-        tokensBuffer.add(createToken(indentToken, copyFrom));
+        dentsBuffer.add(createToken(indentToken, copyFrom));
         break;
       }
     }
     indentations.push(targetIndent);
-    return tokensBuffer.remove();
+    return dentsBuffer.remove();
   }
 }
