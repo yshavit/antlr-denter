@@ -10,11 +10,15 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import static com.yuvalshavit.effes.parser.DenterHelperTest.TokenType.EOF_TOKEN;
+import static com.yuvalshavit.effes.parser.DenterHelperTest.TokenType.INDENT;
+import static com.yuvalshavit.effes.parser.DenterHelperTest.TokenType.NORMAL;
+import static com.yuvalshavit.effes.parser.DenterHelperTest.TokenType.DEDENT;
 import static org.testng.AssertJUnit.assertEquals;
 
 public final class DenterHelperTest {
-  private enum TokenType {
-    NL, INDENT, OUTDENT, NORMAL, EOF_TOKEN
+  public enum TokenType {
+    NL, INDENT, DEDENT, NORMAL, EOF_TOKEN
   }
 
   @Test
@@ -22,7 +26,17 @@ public final class DenterHelperTest {
      TokenChecker
       .of("hello")
       .nl("  ", "bar")
-      .check(TokenType.NORMAL, TokenType.INDENT, TokenType.NORMAL, TokenType.OUTDENT, TokenType.EOF_TOKEN);
+      .check(NORMAL, INDENT, NORMAL, DEDENT, EOF_TOKEN);
+  }
+
+  @Test
+  public void multipleDedents() {
+    TokenChecker
+      .of("hello")
+      .nl("  ", "line2")
+      .nl("    ", "line3")
+      .nl("world")
+      .check(NORMAL, INDENT, NORMAL, INDENT, NORMAL, DEDENT, DEDENT, NORMAL, EOF_TOKEN);
   }
 
   @Test
@@ -46,7 +60,7 @@ public final class DenterHelperTest {
       TokenChecker tb = new TokenChecker();
       LineBuilder lineBuilder = new LineBuilder(0, tb.tokens);
       for (String s : firstLine) {
-        lineBuilder.addToken("", s, TokenType.NORMAL);
+        lineBuilder.addToken("", s, NORMAL);
       }
       return tb;
     }
@@ -69,7 +83,7 @@ public final class DenterHelperTest {
       for (Token t : tokens) {
         int type = t.getType();
         TokenType tokenType = type == Token.EOF
-          ? TokenType.EOF_TOKEN
+          ? EOF_TOKEN
           : TokenType.values()[type];
         types.add(tokenType);
       }
@@ -86,7 +100,7 @@ public final class DenterHelperTest {
         lineBuilder.addToken(nlChars, "", TokenType.NL);
       }
       for (; i < line.length; ++i) {
-        lineBuilder.addToken("", line[1], TokenType.NORMAL);
+        lineBuilder.addToken("", line[i], NORMAL);
       }
     }
 
@@ -99,7 +113,7 @@ public final class DenterHelperTest {
         }
       };
       DenterHelper denter = new DenterHelper(
-        tokenSupplier, TokenType.NL.ordinal(), TokenType.INDENT.ordinal(), TokenType.OUTDENT.ordinal());
+        tokenSupplier, TokenType.NL.ordinal(), INDENT.ordinal(), DEDENT.ordinal());
       ImmutableList.Builder<Token> dented = ImmutableList.builder();
       while(true) {
         Token token = denter.nextToken();

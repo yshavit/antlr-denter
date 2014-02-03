@@ -36,14 +36,12 @@ public final class DenterHelper {
     }
     final Token r;
     if (t.getType() == nlToken) {
-      // stopIndex and startindex are both are inclusive, so this is basically length() - 1. Since the NL token includes
-      // the prefix '\n', this is the length we actually want. Unless it starts with '\r' of course...
       String nlText = t.getText();
-      int indent = nlText.length();
+      int indent = nlText.length() - 1; // evern NL has one \n char, so shorten the length to account for it
       if (indent > 0 && nlText.charAt(0) == '\r') {
-        --indent;
+        --indent; // If the NL also has a \r char, we should account for that as well
       }
-      int prevIndent = indentations.peekLast();
+      int prevIndent = indentations.peek();
       if (indent == prevIndent) {
         r = t; // just a newline
       } else if (indent > prevIndent) {
@@ -100,8 +98,8 @@ public final class DenterHelper {
         tokensBuffer.add(createToken(indentToken, copyFrom));
         break;
       }
-      indentations.push(targetIndent);
     }
+    indentations.push(targetIndent);
     return tokensBuffer.remove();
   }
 }
