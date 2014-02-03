@@ -57,7 +57,7 @@ public final class DenterHelper {
       }
       // nextNext is now a non-NL token; queue it up for the next call to this method
       if (nextNext.getType() == Token.EOF) {
-        return unwindAll(nextNext);
+        return unwindToEof(nextNext);
       }
       nextNonNL = nextNext;
 
@@ -76,7 +76,7 @@ public final class DenterHelper {
         r = unwindTo(indent, t);
       }
     } else if (t.getType() == Token.EOF && indentations.size() > 1) {
-      r = unwindAll(t);
+      r = unwindToEof(t);
     } else {
       r = t;
     }
@@ -128,13 +128,8 @@ public final class DenterHelper {
     return dentsBuffer.remove();
   }
 
-  /**
-   * Simpler version of {@link #unwindTo(int, Token)}, which assumes we're just unwinding to the end. This way we
-   * don't have to worry about "negative" dedents.
-   * @param copyFrom the triggering token
-   * @return a dedent token
-   */
-  private Token unwindAll(Token copyFrom) {
+  private Token unwindToEof(Token copyFrom) {
+    assert copyFrom.getType() == Token.EOF : copyFrom;
     Token token = unwindTo(0, copyFrom);
     dentsBuffer.add(copyFrom);
     return token;
