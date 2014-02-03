@@ -26,8 +26,9 @@ public final class DenterHelperTest {
   public void simple() {
      TokenChecker
       .of("hello")
-      .nl("  ", "bar")
-      .check(NORMAL, INDENT, NORMAL, DEDENT, EOF_TOKEN);
+      .nl("  bar")
+      .raw(NORMAL, NL, NORMAL, EOF_TOKEN)
+      .dented(NORMAL, INDENT, NORMAL, DEDENT, EOF_TOKEN);
   }
 
   @Test
@@ -35,28 +36,31 @@ public final class DenterHelperTest {
     TokenChecker
       .of("hello")
       .nl("world")
-      .nl("  ", "tab1")
-      .nl("  ", "tab2")
-      .check(NORMAL, NL, NORMAL, INDENT, NORMAL, NL, NORMAL, DEDENT, EOF_TOKEN);
+      .nl("  tab1")
+      .nl("  tab2")
+      .raw(NORMAL, NL, NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN)
+      .dented(NORMAL, NL, NORMAL, INDENT, NORMAL, NL, NORMAL, DEDENT, EOF_TOKEN);
   }
 
   @Test
   public void multipleDedents() {
     TokenChecker
       .of("hello")
-      .nl("  ", "line2")
-      .nl("    ", "line3")
+      .nl("  line2")
+      .nl("    line3")
       .nl("world")
-      .check(NORMAL, INDENT, NORMAL, INDENT, NORMAL, DEDENT, DEDENT, NORMAL, EOF_TOKEN);
+      .raw(NORMAL, NL, NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN)
+      .dented(NORMAL, INDENT, NORMAL, INDENT, NORMAL, DEDENT, DEDENT, NORMAL, EOF_TOKEN);
   }
 
   @Test
   public void multipleDedentsToEof() {
     TokenChecker
       .of("hello")
-      .nl("  ", "line2")
-      .nl("    ", "line3")
-      .check(NORMAL, INDENT, NORMAL, INDENT, NORMAL, DEDENT, DEDENT, EOF_TOKEN);
+      .nl("  line2")
+      .nl("    line3")
+      .raw(NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN)
+      .dented(NORMAL, INDENT, NORMAL, INDENT, NORMAL, DEDENT, DEDENT, EOF_TOKEN);
   }
 
   @Test
@@ -65,30 +69,34 @@ public final class DenterHelperTest {
       .of("hello")
       .nl("     ")
       .nl("")
-      .nl("  ", "dolly")
+      .nl("  dolly")
       .nl("        ")
       .nl("    ")
       .nl("")
       .nl("world")
-      .check(NORMAL, INDENT, NORMAL, DEDENT, NORMAL, EOF_TOKEN);
+      .raw(NORMAL, NL, NL, NL, NORMAL, NL, NL, NL, NL, NORMAL, EOF_TOKEN)
+      .dented(NORMAL, INDENT, NORMAL, DEDENT, NORMAL, EOF_TOKEN);
   }
 
   @Test
   public void allIndented() {
     TokenChecker
-      .of("    ", "hello")
-      .nl("    ", "line2")
-      .nl("       ", "line3")
+      .of("    hello")
+      .nl("    line2")
+      .nl("       line3")
       .nl("    ")
-      .check(NORMAL, NL, NORMAL, INDENT, NORMAL, DEDENT, EOF_TOKEN);
+      .raw(NORMAL, NL, NORMAL, NL, NORMAL, NL, EOF_TOKEN)
+      .dented(NORMAL, NL, NORMAL, INDENT, NORMAL, DEDENT, EOF_TOKEN);
   }
 
   @Test
   public void startIndentedThenEmptyLines() {
     TokenChecker
-      .of("    ", "hello")
-      .nl("    ", "line2")
-      .nl("");
+      .of("    hello")
+      .nl("    line2")
+      .nl("")
+      .raw(NORMAL, NL, NORMAL, NL, EOF_TOKEN)
+      .dented(NORMAL, NL, NORMAL, EOF_TOKEN);
   }
 
   @Test
@@ -108,30 +116,28 @@ public final class DenterHelperTest {
 
     private TokenChecker() {}
 
-    public static TokenChecker of(String... firstLine) {
+    public static TokenChecker of(String firstLine) {
       TokenChecker tb = new TokenChecker();
       LineBuilder lineBuilder = new LineBuilder(0, tb.tokens);
-      for (String s : firstLine) {
-        if (s.trim().isEmpty()) {
-          lineBuilder.pos = s.length();
-          continue;
-        }
-        lineBuilder.addToken("", s, NORMAL);
+      int leading = leadingSpacesOf(firstLine);
+      lineBuilder.pos = leading;
+      firstLine = firstLine.substring(leading);
+      if (!firstLine.isEmpty()) {
+        lineBuilder.addToken("", firstLine, NORMAL);
       }
       return tb;
     }
 
-    public TokenChecker nl(String... line) {
+    public TokenChecker nl(String line) {
       tokenize("\n", line);
       return this;
     }
 
-    public void check(TokenType... expected) {
-      tokens.add(new CommonToken(Token.EOF, "<eof-token>"));
+    public void dented(TokenType... expected) {
       ImmutableList<Token> raw = tokens.build();
       List<Token> dented = dent(raw);
       List<TokenType> dentedTypes = tokensToTypes(dented);
-      assertEquals(Arrays.asList(expected), dentedTypes);
+      assertEquals("dented tokens", Arrays.asList(expected), dentedTypes);
     }
 
     private List<TokenType> tokensToTypes(List<Token> tokens) {
@@ -146,17 +152,13 @@ public final class DenterHelperTest {
       return types.build();
     }
 
-    private void tokenize(String nlChars, String[] line) {
+    private void tokenize(String nlChars, String line) {
       LineBuilder lineBuilder = new LineBuilder(++lineNo, tokens);
-      int i = 0;
-      if (line.length > 0 && (line[0].startsWith(" ") || line[0].isEmpty())) {
-        lineBuilder.addToken(nlChars, line[0], NL);
-        ++i;
-      } else {
-        lineBuilder.addToken(nlChars, "", NL);
-      }
-      for (; i < line.length; ++i) {
-        lineBuilder.addToken("", line[i], NORMAL);
+      int leading = leadingSpacesOf(line);
+      lineBuilder.addToken(nlChars, line.substring(0, leading), NL);
+      line = line.substring(leading);
+      if (!line.isEmpty()) {
+        lineBuilder.addToken("", line, NORMAL);
       }
     }
 
@@ -180,6 +182,14 @@ public final class DenterHelperTest {
       }
     }
 
+    public TokenChecker raw(TokenType... expected) {
+      tokens.add(new CommonToken(Token.EOF, "<eof-token>"));
+      ImmutableList<Token> raw = tokens.build();
+      List<TokenType> rawTypes = tokensToTypes(raw);
+      assertEquals("raw tokens", Arrays.asList(expected), rawTypes);
+      return this;
+    }
+
     private static class LineBuilder {
       private final int lineNo;
       private int pos = 0;
@@ -198,6 +208,16 @@ public final class DenterHelperTest {
         builder.add(token);
       }
     }
+  }
+
+  private static int leadingSpacesOf(String s) {
+    for (int i = 0, len = s.length(); i < len; ++i) {
+      if (s.charAt(i) != ' ') {
+        return i;
+      }
+    }
+    // no spaces in the string (including blank string)
+    return s.length();
   }
 
 }
