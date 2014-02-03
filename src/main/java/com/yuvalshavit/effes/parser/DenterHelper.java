@@ -25,20 +25,23 @@ public final class DenterHelper {
   }
 
   public Token nextToken() {
-    Token t;
     if (indentations.isEmpty()) {
-      // look for the first non-NL
-      do {
-        t = tokens.get();
-      }
-      while(t.getType() == nlToken);
       indentations.push(0);
-      nextNonNL = t;
-      if (t.getCharPositionInLine() > 0) {
-        indentations.push(t.getCharPositionInLine());
-        dentsBuffer.add(createToken(indentToken, t));
+      // First invocation. Look for the first non-NL. Enqueue it, and possibly an indentation if that non-NL
+      // token doesn't start at char 0.
+      Token firstRealToken;
+      do {
+        firstRealToken = tokens.get();
+      }
+      while(firstRealToken.getType() == nlToken);
+
+      nextNonNL = firstRealToken;
+      if (firstRealToken.getCharPositionInLine() > 0) {
+        indentations.push(firstRealToken.getCharPositionInLine());
+        dentsBuffer.add(createToken(indentToken, firstRealToken));
       }
     }
+    Token t;
     if (!dentsBuffer.isEmpty()) {
       t = dentsBuffer.remove();
     } else if (nextNonNL != null) {
