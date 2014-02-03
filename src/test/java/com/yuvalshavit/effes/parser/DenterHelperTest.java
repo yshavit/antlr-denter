@@ -112,6 +112,10 @@ public final class DenterHelperTest {
       TokenChecker tb = new TokenChecker();
       LineBuilder lineBuilder = new LineBuilder(0, tb.tokens);
       for (String s : firstLine) {
+        if (s.trim().isEmpty()) {
+          lineBuilder.pos = s.length();
+          continue;
+        }
         lineBuilder.addToken("", s, NORMAL);
       }
       return tb;
