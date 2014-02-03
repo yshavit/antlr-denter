@@ -25,6 +25,21 @@ public final class DenterHelper {
   }
 
   public Token nextToken() {
+    initIfFirstRun();
+    Token t = pullNextToken();
+    final Token r;
+    if (t.getType() == nlToken) {
+      r = handleNewlineToken(t);
+    } else if (t.getType() == Token.EOF && indentations.size() > 1) {
+      r = unwindTo(0, t);
+      nextNonNL = t;
+    } else {
+      r = t;
+    }
+    return r;
+  }
+
+  private void initIfFirstRun() {
     if (indentations.isEmpty()) {
       indentations.push(0);
       // First invocation. Look for the first non-NL. Enqueue it, and possibly an indentation if that non-NL
@@ -41,6 +56,9 @@ public final class DenterHelper {
         dentsBuffer.add(createToken(indentToken, firstRealToken));
       }
     }
+  }
+
+  private Token pullNextToken() {
     Token t;
     if (!dentsBuffer.isEmpty()) {
       t = dentsBuffer.remove();
@@ -50,36 +68,33 @@ public final class DenterHelper {
     } else {
       t = tokens.get();
     }
-    final Token r;
-    if (t.getType() == nlToken) {
-      // fast-forward to the next non-NL
-      Token nextNext = tokens.get();
-      while (nextNext.getType() == nlToken) {
-        t = nextNext;
-        nextNext = tokens.get();
-      }
-      // nextNext is now a non-NL token; queue it up for the next call to this method
-      nextNonNL = nextNext;
+    return t;
+  }
 
-      String nlText = t.getText();
-      int indent = nlText.length() - 1; // every NL has one \n char, so shorten the length to account for it
-      if (indent > 0 && nlText.charAt(0) == '\r') {
-        --indent; // If the NL also has a \r char, we should account for that as well
-      }
-      int prevIndent = indentations.peek();
-      if (indent == prevIndent) {
-        r = t; // just a newline
-      } else if (indent > prevIndent) {
-        indentations.push(indent);
-        r = createToken(indentToken, t);
-      } else {
-        r = unwindTo(indent, t);
-      }
-    } else if (t.getType() == Token.EOF && indentations.size() > 1) {
-      r = unwindTo(0, t);
-      nextNonNL = t;
+  private Token handleNewlineToken(Token t) {
+    // fast-forward to the next non-NL
+    Token nextNext = tokens.get();
+    while (nextNext.getType() == nlToken) {
+      t = nextNext;
+      nextNext = tokens.get();
+    }
+    // nextNext is now a non-NL token; queue it up for the next call to this method
+    nextNonNL = nextNext;
+
+    String nlText = t.getText();
+    int indent = nlText.length() - 1; // every NL has one \n char, so shorten the length to account for it
+    if (indent > 0 && nlText.charAt(0) == '\r') {
+      --indent; // If the NL also has a \r char, we should account for that as well
+    }
+    int prevIndent = indentations.peek();
+    final Token r;
+    if (indent == prevIndent) {
+      r = t; // just a newline
+    } else if (indent > prevIndent) {
+      r = createToken(indentToken, t);
+      indentations.push(indent);
     } else {
-      r = t;
+      r = unwindTo(indent, t);
     }
     return r;
   }
