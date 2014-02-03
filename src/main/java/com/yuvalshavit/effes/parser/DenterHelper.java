@@ -15,6 +15,7 @@ public final class DenterHelper {
   private final int nlToken;
   private final int indentToken;
   private final int dedentToken;
+  private Token nextNonNL;
 
   public DenterHelper(Supplier<Token> tokens, int nlToken, int indentToken, int dedentToken) {
     this.tokens = tokens;
@@ -24,18 +25,29 @@ public final class DenterHelper {
   }
 
   public Token nextToken() {
-    if (!tokensBuffer.isEmpty()) {
-      return tokensBuffer.remove();
+    Token t;
+    if (nextNonNL != null) {
+      t = nextNonNL;
+      nextNonNL = null;
+    } else if (!tokensBuffer.isEmpty()) {
+      t = tokensBuffer.remove();
+    } else {
+      t = tokens.get();
     }
-    Token t = tokens.get();
     if (indentations.isEmpty()) {
-      while(t.getType() == nlToken) {
-        t = tokens.get();
-      }
       indentations.push(t.getCharPositionInLine());
     }
     final Token r;
     if (t.getType() == nlToken) {
+      // fast-forward to the next non-NL
+      Token nextNext = tokens.get();
+      while (nextNext.getType() == nlToken) {
+        t = nextNext;
+        nextNext = tokens.get();
+      }
+      // nextNext is now a non-NL token; queue it up for the next call to this method
+      nextNonNL = nextNext;
+
       String nlText = t.getText();
       int indent = nlText.length() - 1; // evern NL has one \n char, so shorten the length to account for it
       if (indent > 0 && nlText.charAt(0) == '\r') {
@@ -52,7 +64,7 @@ public final class DenterHelper {
       }
     } else if (t.getType() == Token.EOF && indentations.size() > 1) {
       r = unwindTo(0, t);
-      tokensBuffer.add(t); // still need the EOF after the unwinds!
+      nextNonNL = t; // still need the EOF after the unwinds!
     } else {
       r = t;
     }

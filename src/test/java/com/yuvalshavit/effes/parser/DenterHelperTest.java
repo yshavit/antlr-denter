@@ -40,6 +40,29 @@ public final class DenterHelperTest {
   }
 
   @Test
+  public void multipleDedentsToEof() {
+    TokenChecker
+      .of("hello")
+      .nl("  ", "line2")
+      .nl("    ", "line3")
+      .check(NORMAL, INDENT, NORMAL, INDENT, NORMAL, DEDENT, DEDENT, EOF_TOKEN);
+  }
+
+  @Test
+  public void ignoreBlankLines() {
+    TokenChecker
+      .of("hello")
+      .nl("     ")
+      .nl("")
+      .nl("  ", "dolly")
+      .nl("        ")
+      .nl("    ")
+      .nl("")
+      .nl("world")
+      .check(NORMAL, INDENT, NORMAL, DEDENT, NORMAL, EOF_TOKEN);
+  }
+
+  @Test
   public void todo() {
     // data-driven. File should should be just spaces, newlines, and N or R for the line end.
     // N means just \n, R means \r\n.
@@ -93,7 +116,7 @@ public final class DenterHelperTest {
     private void tokenize(String nlChars, String[] line) {
       LineBuilder lineBuilder = new LineBuilder(++lineNo, tokens);
       int i = 0;
-      if (line.length > 0 && line[0].startsWith(" ")) {
+      if (line.length > 0 && (line[0].startsWith(" ") || line[0].isEmpty())) {
         lineBuilder.addToken(nlChars, line[0], TokenType.NL);
         ++i;
       } else {
