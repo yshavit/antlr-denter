@@ -59,9 +59,6 @@ public final class DenterHelper {
         nextNext = tokens.get();
       }
       // nextNext is now a non-NL token; queue it up for the next call to this method
-      if (nextNext.getType() == Token.EOF) {
-        return unwindToEof(nextNext);
-      }
       nextNonNL = nextNext;
 
       String nlText = t.getText();
@@ -79,7 +76,8 @@ public final class DenterHelper {
         r = unwindTo(indent, t);
       }
     } else if (t.getType() == Token.EOF && indentations.size() > 1) {
-      r = unwindToEof(t);
+      r = unwindTo(0, t);
+      nextNonNL = t;
     } else {
       r = t;
     }
@@ -129,12 +127,5 @@ public final class DenterHelper {
     }
     indentations.push(targetIndent);
     return dentsBuffer.remove();
-  }
-
-  private Token unwindToEof(Token copyFrom) {
-    assert copyFrom.getType() == Token.EOF : copyFrom;
-    Token token = unwindTo(0, copyFrom);
-    dentsBuffer.add(copyFrom);
-    return token;
   }
 }
