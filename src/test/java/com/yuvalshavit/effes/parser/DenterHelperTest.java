@@ -2,7 +2,7 @@ package com.yuvalshavit.effes.parser;
 
 import org.testng.annotations.Test;
 
-public final class DenterTest {
+public final class DenterHelperTest {
   @Test
   public void todo() {
     // data-driven. File should should be just spaces, newlines, and N or R for the line end.

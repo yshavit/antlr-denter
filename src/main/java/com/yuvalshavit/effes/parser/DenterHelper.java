@@ -8,7 +8,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Queue;
 
-public final class Denter {
+public final class DenterHelper {
   private final Queue<Token> tokensBuffer = new ArrayDeque<>();
   private final Deque<Integer> indentations = new ArrayDeque<>();
   private final Supplier<Token> tokens;
@@ -16,7 +16,7 @@ public final class Denter {
   private final int indentToken;
   private final int dedentToken;
 
-  public Denter(Supplier<Token> tokens, int nlToken, int indentToken, int dedentToken) {
+  public DenterHelper(Supplier<Token> tokens, int nlToken, int indentToken, int dedentToken) {
     this.tokens = tokens;
     this.nlToken = nlToken;
     this.indentToken = indentToken;
