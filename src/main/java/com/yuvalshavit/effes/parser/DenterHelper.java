@@ -26,6 +26,19 @@ public final class DenterHelper {
 
   public Token nextToken() {
     Token t;
+    if (indentations.isEmpty()) {
+      // look for the first non-NL
+      do {
+        t = tokens.get();
+      }
+      while(t.getType() == nlToken);
+      indentations.push(0);
+      nextNonNL = t;
+      if (t.getCharPositionInLine() > 0) {
+        indentations.push(t.getCharPositionInLine());
+        dentsBuffer.add(createToken(indentToken, t));
+      }
+    }
     if (!dentsBuffer.isEmpty()) {
       t = dentsBuffer.remove();
     } else if (nextNonNL != null) {
@@ -33,9 +46,6 @@ public final class DenterHelper {
       nextNonNL = null;
     } else {
       t = tokens.get();
-    }
-    if (indentations.isEmpty()) {
-      return firstInvocation(t); // TODO this needs to be carefully placed do to the double nature of the "indentations" arg. Add an explicit firstInvocation bool.
     }
     final Token r;
     if (t.getType() == nlToken) {
@@ -73,16 +83,6 @@ public final class DenterHelper {
     return r;
   }
 
-  private Token firstInvocation(Token t) {
-    // look for the first non-NL
-    while(t.getType() == nlToken) {
-      t = tokens.get();
-    }
-    int pos = t.getCharPositionInLine();
-    indentations.push(pos);
-    return t;
-  }
-
   private Token createToken(int tokenType, Token copyFrom) {
     CommonToken r = new CommonToken(copyFrom);
     r.setType(tokenType);
@@ -112,14 +112,7 @@ public final class DenterHelper {
     // (This will probably cause a parse error, but that's not our concern!)
 
     while (true) {
-      int prevIndent = indentations.isEmpty()
-        ? -1
-        :indentations.pop();
-      if (prevIndent < 0) {
-        // "negative" dedent -- put this as the new baseline and we're done.
-        // (The "put" for new baseline is after the loop.)
-        break;
-      }
+      int prevIndent = indentations.pop();
       if (prevIndent == targetIndent) {
         break;
       }
@@ -142,12 +135,8 @@ public final class DenterHelper {
    * @return a dedent token
    */
   private Token unwindAll(Token copyFrom) {
-    assert dentsBuffer.isEmpty() : dentsBuffer;
-    for (int i = 0, len=indentations.size() - 1; i < len; ++i) { // -1 because the first indentation is baseline
-      dentsBuffer.add(createToken(dedentToken, copyFrom));
-    }
-    indentations.clear();
+    Token token = unwindTo(0, copyFrom);
     dentsBuffer.add(copyFrom);
-    return dentsBuffer.remove();
+    return token;
   }
 }
