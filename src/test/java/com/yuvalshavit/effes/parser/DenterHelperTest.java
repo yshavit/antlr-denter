@@ -6,6 +6,7 @@ import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.Token;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -110,9 +111,18 @@ public final class DenterHelperTest {
     throw new AssertionError();
   }
 
-  private static class TokenChecker {
+  private interface TokenBuilder {
+    TokenBuilder nl(String line);
+    DentChecker raw(TokenType... expected);
+  }
+
+  private interface DentChecker {
+    void dented(TokenType... expected);
+  }
+
+  private static class TokenChecker implements TokenBuilder, DentChecker {
     private int lineNo;
-    private ImmutableList.Builder<Token> tokens = ImmutableList.builder();
+    private final List<Token> tokens = new ArrayList<>();
 
     private TokenChecker() {}
 
@@ -128,14 +138,15 @@ public final class DenterHelperTest {
       return tb;
     }
 
-    public TokenChecker nl(String line) {
+    @Override
+    public TokenBuilder nl(String line) {
       tokenize("\n", line);
       return this;
     }
 
+    @Override
     public void dented(TokenType... expected) {
-      ImmutableList<Token> raw = tokens.build();
-      List<Token> dented = dent(raw);
+      List<Token> dented = dent(tokens);
       List<TokenType> dentedTypes = tokensToTypes(dented);
       assertEquals("dented tokens", Arrays.asList(expected), dentedTypes);
     }
@@ -182,10 +193,10 @@ public final class DenterHelperTest {
       }
     }
 
-    public TokenChecker raw(TokenType... expected) {
+    @Override
+    public DentChecker raw(TokenType... expected) {
       tokens.add(new CommonToken(Token.EOF, "<eof-token>"));
-      ImmutableList<Token> raw = tokens.build();
-      List<TokenType> rawTypes = tokensToTypes(raw);
+      List<TokenType> rawTypes = tokensToTypes(tokens);
       assertEquals("raw tokens", Arrays.asList(expected), rawTypes);
       return this;
     }
@@ -193,9 +204,9 @@ public final class DenterHelperTest {
     private static class LineBuilder {
       private final int lineNo;
       private int pos = 0;
-      private final ImmutableList.Builder<Token> builder;
+      private final List<Token> builder;
 
-      private LineBuilder(int lineNo, ImmutableList.Builder<Token> builder) {
+      private LineBuilder(int lineNo, List<Token> builder) {
         this.lineNo = lineNo;
         this.builder = builder;
       }
