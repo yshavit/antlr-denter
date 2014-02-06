@@ -18,11 +18,9 @@ tokens { INDENT, DEDENT }
   }
 }
 
-expr: OP INDENT expr expr DEDENT # operation
-    | INT nl                     # intLiteral
+expr: OP INDENT expr expr DEDENT # Operation
+    | INT NL                     # IntLiteral
     ;
-
-nl: NL | DEDENT;
 
 NL: ('\r'? '\n' ' '*); // note the ' '*
 WS: [ \t]+ -> skip;
