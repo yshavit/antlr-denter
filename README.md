@@ -62,7 +62,7 @@ Basically, just use them. One bit worth noting is that when the denter injects D
     DEDENT
     DEDENT
     "dolly"
-    &lt;eof&gt;
+    <eof>
 
 This is done so that simple expressions can be terminated by the `NL` token. In this case, `universe` represents a simple expression, and you can imagine that the parser would define it as something like `universeExpr: 'universe' NL`. Easy peasy!
 
