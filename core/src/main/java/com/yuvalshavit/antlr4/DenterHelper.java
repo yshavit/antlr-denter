@@ -89,6 +89,13 @@ public abstract class DenterHelper {
   private Token createToken(int tokenType, Token copyFrom) {
     CommonToken r = new CommonToken(copyFrom);
     r.setType(tokenType);
+    if (tokenType == nlToken) {
+      r.setText("<newline (from " + r.getText() + ")>");
+    } else if (tokenType == indentToken) {
+      r.setText("<indent (from " + r.getText() + ")>");
+    } else if (tokenType == dedentToken) {
+      r.setText("<dedent (from " + r.getText() + ")>");
+    }
     return r;
   }
 
@@ -100,6 +107,7 @@ public abstract class DenterHelper {
    */
   private Token unwindTo(int targetIndent, Token copyFrom) {
     assert dentsBuffer.isEmpty() : dentsBuffer;
+    dentsBuffer.add(createToken(nlToken, copyFrom));
     // To make things easier, we'll queue up ALL of the dedents, and then pop off the first one.
     // For example, here's how some text is analyzed:
     //

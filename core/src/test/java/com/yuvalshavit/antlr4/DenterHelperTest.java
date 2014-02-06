@@ -28,7 +28,7 @@ public final class DenterHelperTest {
       .of("hello")
       .nl("  bar")
       .raw(NORMAL, NL, NORMAL, EOF_TOKEN)
-      .dented(NORMAL, INDENT, NORMAL, DEDENT, EOF_TOKEN);
+      .dented(NORMAL, INDENT, NORMAL, NL, DEDENT, EOF_TOKEN);
   }
 
   @Test
@@ -39,7 +39,7 @@ public final class DenterHelperTest {
       .nl("  tab1")
       .nl("  tab2")
       .raw(NORMAL, NL, NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN)
-      .dented(NORMAL, NL, NORMAL, INDENT, NORMAL, NL, NORMAL, DEDENT, EOF_TOKEN);
+      .dented(NORMAL, NL, NORMAL, INDENT, NORMAL, NL, NORMAL, NL, DEDENT, EOF_TOKEN);
   }
 
   @Test
@@ -50,7 +50,7 @@ public final class DenterHelperTest {
       .nl("    line3")
       .nl("world")
       .raw(NORMAL, NL, NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN)
-      .dented(NORMAL, INDENT, NORMAL, INDENT, NORMAL, DEDENT, DEDENT, NORMAL, EOF_TOKEN);
+      .dented(NORMAL, INDENT, NORMAL, INDENT, NORMAL, NL, DEDENT, DEDENT, NORMAL, EOF_TOKEN);
   }
 
   @Test
@@ -60,7 +60,7 @@ public final class DenterHelperTest {
       .nl("  line2")
       .nl("    line3")
       .raw(NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN)
-      .dented(NORMAL, INDENT, NORMAL, INDENT, NORMAL, DEDENT, DEDENT, EOF_TOKEN);
+      .dented(NORMAL, INDENT, NORMAL, INDENT, NORMAL, NL, DEDENT, DEDENT, EOF_TOKEN);
   }
 
   @Test
@@ -75,7 +75,7 @@ public final class DenterHelperTest {
       .nl("")
       .nl("world")
       .raw(NORMAL, NL, NL, NL, NORMAL, NL, NL, NL, NL, NORMAL, EOF_TOKEN)
-      .dented(NORMAL, INDENT, NORMAL, DEDENT, NORMAL, EOF_TOKEN);
+      .dented(NORMAL, INDENT, NORMAL, NL, DEDENT, NORMAL, EOF_TOKEN);
   }
 
   @Test
@@ -86,7 +86,7 @@ public final class DenterHelperTest {
       .nl("       line3")
       .nl("    ")
       .raw(NORMAL, NL, NORMAL, NL, NORMAL, NL, EOF_TOKEN)
-      .dented(INDENT, NORMAL, NL, NORMAL, INDENT, NORMAL, DEDENT, DEDENT, EOF_TOKEN);
+      .dented(INDENT, NORMAL, NL, NORMAL, INDENT, NORMAL, NL, DEDENT, NL, DEDENT, EOF_TOKEN);
   }
 
   @Test
@@ -96,7 +96,7 @@ public final class DenterHelperTest {
       .nl("    line2")
       .nl("")
       .raw(NORMAL, NL, NORMAL, NL, EOF_TOKEN)
-      .dented(INDENT, NORMAL, NL, NORMAL, DEDENT, EOF_TOKEN);
+      .dented(INDENT, NORMAL, NL, NORMAL, NL, DEDENT, EOF_TOKEN);
   }
 
   @Test
@@ -107,7 +107,7 @@ public final class DenterHelperTest {
       .nl("    world")
       .nl("boom")
       .raw(NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN)
-      .dented(INDENT, NORMAL, NL, NORMAL, DEDENT, NORMAL, EOF_TOKEN);
+      .dented(INDENT, NORMAL, NL, NORMAL, NL, DEDENT, NORMAL, EOF_TOKEN);
   }
 
   @Test
@@ -117,7 +117,7 @@ public final class DenterHelperTest {
       .nl("     world")
       .nl("  boom")
       .raw(NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN)
-      .dented(NORMAL, INDENT, NORMAL, DEDENT, INDENT, NORMAL, DEDENT, EOF_TOKEN);
+      .dented(NORMAL, INDENT, NORMAL, NL, DEDENT, INDENT, NORMAL, NL, DEDENT, EOF_TOKEN);
   }
 
   @Test

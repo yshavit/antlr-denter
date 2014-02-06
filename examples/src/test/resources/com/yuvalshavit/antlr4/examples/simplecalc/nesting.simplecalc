@@ -1,0 +1,8 @@
+16
+ADD // 12 + 4 = 16
+  MULTIPLY // 6 * 2 = 12
+    6
+    sub // 3 - 1 = 2
+         3 // note: different indent amount, but still just one indent
+         1
+  4

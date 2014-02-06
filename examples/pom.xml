@@ -2,13 +2,14 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.yuvalshavit.antlr4</groupId>
-  <artifactId>denter</artifactId>
+  <artifactId>denter-examples</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Denter</name>
-  <description>Helper class for generating INDENT/DEDENT tokens with antlr4.</description>
+  <name>Denter examples</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <antlr4.visitor>true</antlr4.visitor>
+    <antlr4.listener>false</antlr4.listener>
   </properties>
 
   <dependencies>
@@ -18,7 +19,18 @@
       <version>4.0</version>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>com.yuvalshavit.antlr4</groupId>
+      <artifactId>denter</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
 
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>16.0</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-library</artifactId>
@@ -48,6 +60,42 @@
             <Xlint />
           </compilerArguments>
         </configuration>
+      </plugin>
+
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>target/generated-sources/antlr4</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.antlr</groupId>
+        <artifactId>antlr4-maven-plugin</artifactId>
+        <version>4.0</version>
+        <configuration>
+          <sourceDirectory>src/main/resources</sourceDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>antlr4</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
