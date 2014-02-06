@@ -87,15 +87,18 @@ public abstract class DenterHelper {
   }
 
   private Token createToken(int tokenType, Token copyFrom) {
-    CommonToken r = new CommonToken(copyFrom);
-    r.setType(tokenType);
+    String tokenTypeStr;
     if (tokenType == nlToken) {
-      r.setText("<newline (from " + r.getText() + ")>");
+      tokenTypeStr = "newline";
     } else if (tokenType == indentToken) {
-      r.setText("<indent (from " + r.getText() + ")>");
+      tokenTypeStr = "indent";
     } else if (tokenType == dedentToken) {
-      r.setText("<dedent (from " + r.getText() + ")>");
+      tokenTypeStr = "dedent";
+    } else {
+      tokenTypeStr = null;
     }
+    CommonToken r = new InjectedToken(copyFrom, tokenTypeStr);
+    r.setType(tokenType);
     return r;
   }
 
@@ -132,5 +135,22 @@ public abstract class DenterHelper {
     }
     indentations.push(targetIndent);
     return dentsBuffer.remove();
+  }
+
+  private static class InjectedToken extends CommonToken {
+    private String type;
+
+    private InjectedToken(Token oldToken, String type) {
+      super(oldToken);
+      this.type = type;
+    }
+
+    @Override
+    public String getText() {
+      if (type != null) {
+        setText(String.format("<%s (from %s)>", type, super.getText()));
+      }
+      return super.getText();
+    }
   }
 }
