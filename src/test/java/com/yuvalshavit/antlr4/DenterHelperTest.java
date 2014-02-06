@@ -1,4 +1,4 @@
-package com.yuvalshavit.effes.parser;
+package com.yuvalshavit.antlr4;
 
 import com.google.common.collect.ImmutableList;
 import org.antlr.v4.runtime.CommonToken;
@@ -10,11 +10,11 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.yuvalshavit.effes.parser.DenterHelperTest.TokenType.EOF_TOKEN;
-import static com.yuvalshavit.effes.parser.DenterHelperTest.TokenType.INDENT;
-import static com.yuvalshavit.effes.parser.DenterHelperTest.TokenType.NL;
-import static com.yuvalshavit.effes.parser.DenterHelperTest.TokenType.NORMAL;
-import static com.yuvalshavit.effes.parser.DenterHelperTest.TokenType.DEDENT;
+import static com.yuvalshavit.antlr4.DenterHelperTest.TokenType.EOF_TOKEN;
+import static com.yuvalshavit.antlr4.DenterHelperTest.TokenType.INDENT;
+import static com.yuvalshavit.antlr4.DenterHelperTest.TokenType.NL;
+import static com.yuvalshavit.antlr4.DenterHelperTest.TokenType.NORMAL;
+import static com.yuvalshavit.antlr4.DenterHelperTest.TokenType.DEDENT;
 import static org.testng.AssertJUnit.assertEquals;
 
 public final class DenterHelperTest {

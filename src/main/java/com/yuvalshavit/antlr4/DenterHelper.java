@@ -1,4 +1,4 @@
-package com.yuvalshavit.effes.parser;
+package com.yuvalshavit.antlr4;
 
 import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.Token;
