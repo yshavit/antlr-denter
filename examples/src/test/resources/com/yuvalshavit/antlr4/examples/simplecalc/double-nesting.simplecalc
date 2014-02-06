@@ -1,0 +1,13 @@
+17
+// 7 + 10
+ADD
+
+  // 8-1
+  SUB
+    8
+    1
+   
+    // 2 *5... note that indentation doesn't matter on comment lines
+  MULTIPLY
+    2
+    5
