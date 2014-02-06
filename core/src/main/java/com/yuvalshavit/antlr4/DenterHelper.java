@@ -13,6 +13,7 @@ public abstract class DenterHelper {
   private final int nlToken;
   private final int indentToken;
   private final int dedentToken;
+  private boolean reachedEof;
 
   protected DenterHelper(int nlToken, int indentToken, int dedentToken) {
     this.nlToken = nlToken;
@@ -25,19 +26,15 @@ public abstract class DenterHelper {
     Token t = dentsBuffer.isEmpty()
       ? pullToken()
       : dentsBuffer.remove();
+    if (reachedEof) {
+      return t;
+    }
     final Token r;
     if (t.getType() == nlToken) {
       r = handleNewlineToken(t);
     } else if (t.getType() == Token.EOF) {
-      // when we reach EOF, unwind al indentations. If there aren't any, insert a NL. This lets the grammar treat
-      // un-indented expressions as just being NL-terminated, rather than NL|EOF.
-      if (indentations.isEmpty()) {
-        r = createToken(nlToken, t);
-        dentsBuffer.add(t);
-      } else {
-        r = unwindTo(0, t);
-        dentsBuffer.add(t);
-      }
+      r = handleEof(t);
+
     } else {
       r = t;
     }
@@ -72,6 +69,9 @@ public abstract class DenterHelper {
       t = nextNext;
       nextNext = pullToken();
     }
+    if (nextNext.getType() == Token.EOF) {
+      return handleEof(nextNext);
+    }
     // nextNext is now a non-NL token; we'll queue it up after any possible dents
 
     String nlText = t.getText();
@@ -90,6 +90,20 @@ public abstract class DenterHelper {
       r = unwindTo(indent, t);
     }
     dentsBuffer.add(nextNext);
+    return r;
+  }
+
+  private Token handleEof(Token t) {
+    Token r;// when we reach EOF, unwind al indentations. If there aren't any, insert a NL. This lets the grammar treat
+    // un-indented expressions as just being NL-terminated, rather than NL|EOF.
+    if (indentations.isEmpty()) {
+      r = createToken(nlToken, t);
+      dentsBuffer.add(t);
+    } else {
+      r = unwindTo(0, t);
+      dentsBuffer.add(t);
+    }
+    reachedEof = true;
     return r;
   }
 

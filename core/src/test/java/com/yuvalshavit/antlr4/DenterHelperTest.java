@@ -50,7 +50,7 @@ public final class DenterHelperTest {
       .nl("    line3")
       .nl("world")
       .raw(NORMAL, NL, NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN)
-      .dented(NORMAL, INDENT, NORMAL, INDENT, NORMAL, NL, DEDENT, DEDENT, NORMAL, EOF_TOKEN);
+      .dented(NORMAL, INDENT, NORMAL, INDENT, NORMAL, NL, DEDENT, DEDENT, NORMAL, NL, EOF_TOKEN);
   }
 
   @Test
@@ -75,7 +75,7 @@ public final class DenterHelperTest {
       .nl("")
       .nl("world")
       .raw(NORMAL, NL, NL, NL, NORMAL, NL, NL, NL, NL, NORMAL, EOF_TOKEN)
-      .dented(NORMAL, INDENT, NORMAL, NL, DEDENT, NORMAL, EOF_TOKEN);
+      .dented(NORMAL, INDENT, NORMAL, NL, DEDENT, NORMAL, NL, EOF_TOKEN);
   }
 
   @Test
@@ -86,7 +86,7 @@ public final class DenterHelperTest {
       .nl("       line3")
       .nl("    ")
       .raw(NORMAL, NL, NORMAL, NL, NORMAL, NL, EOF_TOKEN)
-      .dented(INDENT, NORMAL, NL, NORMAL, INDENT, NORMAL, NL, DEDENT, NL, DEDENT, EOF_TOKEN);
+      .dented(INDENT, NORMAL, NL, NORMAL, INDENT, NORMAL, NL, DEDENT, DEDENT, EOF_TOKEN);
   }
 
   @Test
@@ -107,7 +107,7 @@ public final class DenterHelperTest {
       .nl("    world")
       .nl("boom")
       .raw(NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN)
-      .dented(INDENT, NORMAL, NL, NORMAL, NL, DEDENT, NORMAL, EOF_TOKEN);
+      .dented(INDENT, NORMAL, NL, NORMAL, NL, DEDENT, NORMAL, NL, EOF_TOKEN);
   }
 
   @Test
@@ -127,7 +127,7 @@ public final class DenterHelperTest {
       .nl("world")
       .rf("dolly")
       .raw(NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN)
-      .dented(NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN);
+      .dented(NORMAL, NL, NORMAL, NL, NORMAL, NL, EOF_TOKEN);
   }
 
   private interface TokenBuilder {
