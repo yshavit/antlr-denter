@@ -73,7 +73,7 @@ tl;dr, for maven:
 
     <dependency>
       <groupId>com.yuvalshavit.antlr4</groupId>
-      <artifactId>denter</artifactId>
+      <artifactId>antlr-denter</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
 
