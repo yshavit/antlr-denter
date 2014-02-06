@@ -1,5 +1,5 @@
-Antlr-Denter: Python-like indentation tokens for ANTLR4
-=======================================================
+Python-like indentation tokens for ANTLR4
+=========================================
 
 A mostly-readymade solution to INDENT/DEDENT tokens in ANTLR v4. Just plug in the `DenterHelper` and you'll be good to go!
 
@@ -23,10 +23,13 @@ Adding INDENT / DEDENT tokens to your lexer
     }
 
     @lexer::members {
-      private final DenterHelper denter = new DenterHelper(NL, MyCoolParser.INDENT, MyCoolParser.DEDENT) {
+      private final DenterHelper denter = new DenterHelper(NL,
+                                                           MyCoolParser.INDENT,
+                                                           MyCoolParser.DEDENT)
+      {
         @Override
         public Token pullToken() {
-          return MyCoolLexer.super.nextToken(); // must be to super.nextToken, or we'll recurse forever!
+          return MyCoolLexer.super.nextToken();
         }
       };
     
@@ -50,16 +53,16 @@ Basically, just use them. One bit worth noting is that when the denter injects D
 
 ... the tokens would be (roughly):
 
-  "hello"
-  INDENT
-  "world"
-  INDENT
-  "universe"
-  NL
-  DEDENT
-  DEDENT
-  "dolly"
-  &lt;eof&gt;
+    "hello"
+    INDENT
+    "world"
+    INDENT
+    "universe"
+    NL
+    DEDENT
+    DEDENT
+    "dolly"
+    &lt;eof&gt;
 
 This is done so that simple expressions can be terminated by the `NL` token. In this case, `universe` represents a simple expression, and you can imagine that the parser would define it as something like `universeExpr: 'universe' NL`. Easy peasy!
 
