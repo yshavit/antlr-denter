@@ -105,14 +105,9 @@ public abstract class DenterHelper {
     //
     //  Text          :  Indentation  :  Action         : Indents Deque
     //  [ baseline ]  :  0            :  nothing        : [0]
-    //  [ --foo    ]  :  2            :  INDENT         : [0, 2]
-    //  [ ---bar   ]  :  3            :  INDENT         : [0, 2, 3]
+    //  [   foo    ]  :  2            :  INDENT         : [0, 2]
+    //  [    bar   ]  :  3            :  INDENT         : [0, 2, 3]
     //  [ baz      ]  :  0            :  DEDENT x2      : [0]
-    //  [ --again  ]  :  2            :  INDENT         : [0, 1]
-    //  [ -weird   ]  :  1            :  DEDENT,INDENT  : [0, 1]
-    //
-    // This method is only interested in the DEDENT actions, although it may also enqueue an INDENT as seen above.
-    // (This will probably cause a parse error, but that's not our concern!)
 
     while (true) {
       int prevIndent = indentations.pop();
