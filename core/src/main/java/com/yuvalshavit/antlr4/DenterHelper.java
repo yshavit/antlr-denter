@@ -28,9 +28,16 @@ public abstract class DenterHelper {
     final Token r;
     if (t.getType() == nlToken) {
       r = handleNewlineToken(t);
-    } else if (t.getType() == Token.EOF && indentations.size() > 1) {
-      r = unwindTo(0, t);
-      dentsBuffer.add(t);
+    } else if (t.getType() == Token.EOF) {
+      // when we reach EOF, unwind al indentations. If there aren't any, insert a NL. This lets the grammar treat
+      // un-indented expressions as just being NL-terminated, rather than NL|EOF.
+      if (indentations.isEmpty()) {
+        r = createToken(nlToken, t);
+        dentsBuffer.add(t);
+      } else {
+        r = unwindTo(0, t);
+        dentsBuffer.add(t);
+      }
     } else {
       r = t;
     }

@@ -44,7 +44,7 @@ Adding INDENT / DEDENT tokens to your lexer
 Using the tokens in your parser
 -------------------------------
 
-Basically, just use them. One bit worth noting is that when the denter injects DEDENT tokens, it'll prefix any string of them with a single `NL`. For instance, given this input:
+Basically, just use them. One bit worth noting is that when the denter injects DEDENT tokens, it'll prefix any string of them with a single `NL`. A single `NL` is also inserted before the EOF token if there are no DEDENTs to insert. For instance, given this input:
 
     hello
       world
@@ -62,9 +62,10 @@ Basically, just use them. One bit worth noting is that when the denter injects D
     DEDENT
     DEDENT
     "dolly"
+    NL
     <eof>
 
-This is done so that simple expressions can be terminated by the `NL` token. In this case, `universe` represents a simple expression, and you can imagine that the parser would define it as something like `universeExpr: 'universe' NL`. Easy peasy!
+This is done so that simple expressions can be terminated by the `NL` token without worrying about surrounding context (an impending dedent or EOF). In this case, `universe` and `dolly` represent simple expressions, and you can imagine that the grammar would contain something like `statement: expr  NL | helloBlock;`. Easy peasy!
 
 Repo layout, maven stuff
 ========================
