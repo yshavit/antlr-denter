@@ -1,6 +1,5 @@
 package com.yuvalshavit.effes.parser;
 
-import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
 import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.Token;
@@ -202,14 +201,7 @@ public final class DenterHelperTest {
 
     private List<Token> dent(List<Token> tokens) {
       final Iterator<Token> tokenIter = tokens.iterator();
-      Supplier<Token> tokenSupplier = new Supplier<Token>() {
-        @Override
-        public Token get() {
-          return tokenIter.next();
-        }
-      };
-      DenterHelper denter = new DenterHelper(
-        tokenSupplier, NL.ordinal(), INDENT.ordinal(), DEDENT.ordinal());
+      DenterHelper denter = new IterableBasedDenterHelper(NL.ordinal(), INDENT.ordinal(), DEDENT.ordinal(), tokenIter);
       ImmutableList.Builder<Token> dented = ImmutableList.builder();
       while(true) {
         Token token = denter.nextToken();
@@ -256,6 +248,20 @@ public final class DenterHelperTest {
     }
     // no spaces in the string (including blank string)
     return s.length();
+  }
+
+  private static class IterableBasedDenterHelper extends DenterHelper {
+    private final Iterator<Token> tokens;
+
+    private IterableBasedDenterHelper(int nlToken, int indentToken, int dedentToken, Iterator<Token> tokens) {
+      super(nlToken, indentToken, dedentToken);
+      this.tokens = tokens;
+    }
+
+    @Override
+    protected Token pullToken() {
+      return tokens.next();
+    }
   }
 
 }

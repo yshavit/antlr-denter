@@ -1,6 +1,5 @@
 package com.yuvalshavit.effes.parser;
 
-import com.google.common.base.Supplier;
 import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.Token;
 
@@ -8,16 +7,14 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Queue;
 
-public final class DenterHelper {
+public abstract class DenterHelper {
   private final Queue<Token> dentsBuffer = new ArrayDeque<>();
   private final Deque<Integer> indentations = new ArrayDeque<>();
-  private final Supplier<Token> tokens;
   private final int nlToken;
   private final int indentToken;
   private final int dedentToken;
 
-  public DenterHelper(Supplier<Token> tokens, int nlToken, int indentToken, int dedentToken) {
-    this.tokens = tokens;
+  protected DenterHelper(int nlToken, int indentToken, int dedentToken) {
     this.nlToken = nlToken;
     this.indentToken = indentToken;
     this.dedentToken = dedentToken;
@@ -26,7 +23,7 @@ public final class DenterHelper {
   public Token nextToken() {
     initIfFirstRun();
     Token t = dentsBuffer.isEmpty()
-      ? tokens.get()
+      ? pullToken()
       : dentsBuffer.remove();
     final Token r;
     if (t.getType() == nlToken) {
@@ -40,6 +37,8 @@ public final class DenterHelper {
     return r;
   }
 
+  protected abstract Token pullToken();
+
   private void initIfFirstRun() {
     if (indentations.isEmpty()) {
       indentations.push(0);
@@ -47,7 +46,7 @@ public final class DenterHelper {
       // token doesn't start at char 0.
       Token firstRealToken;
       do {
-        firstRealToken = tokens.get();
+        firstRealToken = pullToken();
       }
       while(firstRealToken.getType() == nlToken);
 
@@ -61,10 +60,10 @@ public final class DenterHelper {
 
   private Token handleNewlineToken(Token t) {
     // fast-forward to the next non-NL
-    Token nextNext = tokens.get();
+    Token nextNext = pullToken();
     while (nextNext.getType() == nlToken) {
       t = nextNext;
-      nextNext = tokens.get();
+      nextNext = pullToken();
     }
     // nextNext is now a non-NL token; we'll queue it up after any possible dents
 
