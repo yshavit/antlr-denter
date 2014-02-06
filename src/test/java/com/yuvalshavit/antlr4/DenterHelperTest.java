@@ -1,12 +1,12 @@
 package com.yuvalshavit.antlr4;
 
-import com.google.common.collect.ImmutableList;
 import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.Token;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -178,7 +178,7 @@ public final class DenterHelperTest {
     }
 
     private List<TokenType> tokensToTypes(List<Token> tokens) {
-      ImmutableList.Builder<TokenType> types = ImmutableList.builder();
+      List<TokenType> types = new ArrayList<>();
       for (Token t : tokens) {
         int type = t.getType();
         TokenType tokenType = type == Token.EOF
@@ -186,7 +186,7 @@ public final class DenterHelperTest {
           : TokenType.values()[type];
         types.add(tokenType);
       }
-      return types.build();
+      return Collections.unmodifiableList(types);
     }
 
     private void tokenize(String nlChars, String line) {
@@ -202,12 +202,12 @@ public final class DenterHelperTest {
     private List<Token> dent(List<Token> tokens) {
       final Iterator<Token> tokenIter = tokens.iterator();
       DenterHelper denter = new IterableBasedDenterHelper(NL.ordinal(), INDENT.ordinal(), DEDENT.ordinal(), tokenIter);
-      ImmutableList.Builder<Token> dented = ImmutableList.builder();
+      List<Token> dented = new ArrayList<>();
       while(true) {
         Token token = denter.nextToken();
         dented.add(token);
         if (token.getType() == Token.EOF) {
-          return dented.build();
+          return Collections.unmodifiableList(dented);
         }
       }
     }
