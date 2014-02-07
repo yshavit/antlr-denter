@@ -36,11 +36,20 @@ public final class GrammarForker {
         sb.append(nlReplacement);
         charsWrittenInLine = 0;
       } else {
+        String text = t.getText();
         if (charsWrittenInLine < expectCharsWritten) {
-          addSpaces(sb, expectCharsWritten - charsWrittenInLine);
+          if ("else".equals(text)) {
+            // Instead of a newline (which we previously added), just add a space. Also, note that the
+            // charsWrittenInLine happens unconditionally. This is intentional, to trick the indent-inserter into
+            // thinking it's already done its job. The net effect is to put else's on the same line as the if's
+            // closing brace, which is a standard style.
+            chomp(sb, '\n');
+            sb.append(' ');
+          } else {
+            addSpaces(sb, expectCharsWritten - charsWrittenInLine);
+          }
           charsWrittenInLine = expectCharsWritten;
         }
-        String text = t.getText();
         sb.append(text);
         charsWrittenInLine += text.length();
       }
