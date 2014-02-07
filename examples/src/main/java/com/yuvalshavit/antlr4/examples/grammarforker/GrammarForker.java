@@ -21,13 +21,13 @@ public final class GrammarForker {
     for (Token t = lexer.nextToken(); t.getType() != Lexer.EOF; t = lexer.nextToken()) {
       int tokenType = t.getType();
       if (tokenType == indent) {
-        sb.append(' ').append(INDENT_BRACE).append(' ');
+        sb.append(INDENT_BRACE);
       } else if (tokenType == dedent) {
-        sb.append(' ').append(DEDENT_BRACE).append(' ');
+        sb.append(DEDENT_BRACE);
       } else if (tokenType == nl) {
         sb.append(nlReplacement);
       } else {
-        sb.append(' ').append(t.getText()).append(' ');
+        sb.append(t.getText());
       }
     }
     return sb.toString();
