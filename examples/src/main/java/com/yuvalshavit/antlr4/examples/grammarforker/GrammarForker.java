@@ -3,6 +3,8 @@ package com.yuvalshavit.antlr4.examples.grammarforker;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.yuvalshavit.antlr4.examples.util.ResourcesReader;
+import org.antlr.v4.runtime.Lexer;
+import org.antlr.v4.runtime.Token;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,6 +16,23 @@ public final class GrammarForker {
   public static final String DEDENT_BRACE = "◀";
   private static final ResourcesReader resources = new ResourcesReader(GrammarForker.class);
 
+  public static String dentedToBraced(Lexer lexer, int indent, int dedent, int nl, String nlReplacement) {
+    StringBuilder sb = new StringBuilder();
+    for (Token t = lexer.nextToken(); t.getType() != Lexer.EOF; t = lexer.nextToken()) {
+      int tokenType = t.getType();
+      if (tokenType == indent) {
+        sb.append(' ').append(INDENT_BRACE).append(' ');
+      } else if (tokenType == dedent) {
+        sb.append(' ').append(DEDENT_BRACE).append(' ');
+      } else if (tokenType == nl) {
+        sb.append(nlReplacement);
+      } else {
+        sb.append(' ').append(t.getText()).append(' ');
+      }
+    }
+    return sb.toString();
+  }
+
   public static void main(String[] ignored) throws Exception {
     GrammarForker forker = new GrammarForker();
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -21,6 +40,7 @@ public final class GrammarForker {
     String templateFilePath = null;
     String destPath = null;
     while (true) {
+      System.out.printf("pwd: %s%n", new File(".").getAbsoluteFile().getParent());
       templateFilePath = prompt(reader, "template file", templateFilePath);
       if (templateFilePath == null) {
         break;
@@ -83,7 +103,10 @@ public final class GrammarForker {
     }
 
     String template = Files.toString(templateFile, Charsets.UTF_8);
-    String grammarNameBase = templateFile.getName();
+    String grammarNameBase = templateFile.getName()
+      .replaceFirst("[^-]+-", "") // "foo-Bar" becomes "Bar"
+      .replaceFirst("\\.g4$", ""); // remove '.g4' extension
+
 
     writeGrammarFile(template, dentingForker, grammarNameBase + "Denting", destPath);
     writeGrammarFile(template, bracedForker, grammarNameBase + "Braced", destPath);

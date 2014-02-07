@@ -87,6 +87,9 @@
         <version>4.0</version>
         <configuration>
           <sourceDirectory>src/main/resources</sourceDirectory>
+          <excludes>
+            <exclude>**/antlrIgnore-*.g4</exclude>
+          </excludes>
         </configuration>
         <executions>
           <execution>
