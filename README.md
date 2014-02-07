@@ -67,6 +67,30 @@ Basically, just use them. One bit worth noting is that when the denter injects D
 
 This is done so that simple expressions can be terminated by the `NL` token without worrying about surrounding context (an impending dedent or EOF). In this case, `universe` and `dolly` represent simple expressions, and you can imagine that the grammar would contain something like `statement: expr  NL | helloBlock;`. Easy peasy!
 
+"Half-DEDENTs"
+--------------
+
+What happens when you dedent to an indentation level that was never established?
+
+    someStatement()
+    if foo():
+        if bar():
+          fooAndBar()
+      bogusLine()
+
+Notice that `bogusLine()` doesn't match with any indentation level: it's more indented than `if foo()` but less than its first statement, `if bar()`.
+
+This is a buggy program in python. If you to run such a program, you'll get:
+
+> IndentationError: unindent does not match any outer indentation level
+
+The `DenterHelper` processor handles this by inserting two tokens: a `DEDENT` followed immediately by an `INDENT` (the total sequence here would actually be two `DEDENT`s followed by an `INDENT`, since `bogusLine()` is twice-dedented from `fooAndBar()`). The rationale is that the line has dedened to its parent, and then indented. It's consistent with the indentation tokesns for something like:
+
+    someStatement()
+      bogusLine()
+
+If your indentation scheme is anything like python's, chances are you want this to be a compilation error. The good news is that it will be, as long as your parser doesn't allow "spontaneous" indents. That is, if the example just before this paragraph fails, then so will the half-dedent example above. In both cases, the parser rules will bork on an unexpected `INDENT` token.
+
 Repo layout, maven stuff
 ========================
 
@@ -80,6 +104,8 @@ tl;dr, for maven:
 
 - **core**: The real thing. This is what you're interested in.
 - **examples**: Contains a real-life example of a language that uses `DenterHelper`, so you can see a full solution, including the pom, how to set up the parser (which is nothing extra relative to usual antlr stuff) and how to define a language that uses these INDENT/DEDENT tokens. The language itself is pretty basic, but it should get the point across.
+
+The maven run is as simple as `mvn install` (or your favorite goal).
 
 Comments? Suggestions? Bugs?
 ============================

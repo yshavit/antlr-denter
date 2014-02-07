@@ -121,6 +121,17 @@ public final class DenterHelperTest {
   }
 
   @Test
+  public void halfDentFromTwo() {
+    TokenChecker
+      .of("hello")
+      .nl("     world")
+      .nl("         universe")
+      .nl("  boom")
+      .raw(NORMAL, NL, NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN)
+      .dented(NORMAL, INDENT, NORMAL, INDENT, NORMAL, NL, DEDENT, DEDENT, INDENT, NORMAL, NL, DEDENT, EOF_TOKEN);
+  }
+
+  @Test
   public void withReturn() {
     TokenChecker
       .of("hello")
