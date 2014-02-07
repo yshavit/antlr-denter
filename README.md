@@ -1,7 +1,7 @@
 Python-like indentation tokens for ANTLR4
 =========================================
 
-A mostly-readymade solution to INDENT/DEDENT tokens in ANTLR v4. Just plug in the `DenterHelper` and you'll be good to go!
+A mostly-readymade solution to INDENT/DEDENT tokens in ANTLR v4. Just plug in the `DenterHelper` and you'll be good to go! See [this blog post](http://blog.yuvalshavit.com/2014/02/python-like-indentation-using-antlr4.html) for some of the motivations behind this project.
 
 Usage
 =====
