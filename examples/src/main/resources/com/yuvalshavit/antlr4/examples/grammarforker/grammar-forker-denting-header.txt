@@ -1,0 +1,19 @@
+grammar ${GRAMMAR_NAME};
+
+tokens { INDENT, DEDENT }
+@lexer::header {
+  import com.yuvalshavit.antlr4.DenterHelper;
+}
+@lexer::members {
+  private final DenterHelper denter = new DenterHelper(NL, ${GRAMMAR_NAME}Parser.INDENT, ${GRAMMAR_NAME}Parser.DEDENT) {
+    @Override
+    public Token pullToken() {
+      return ${GRAMMAR_NAME}Lexer.super.nextToken();
+    }
+  };
+
+  @Override
+  public Token nextToken() {
+    return denter.nextToken();
+  }
+}

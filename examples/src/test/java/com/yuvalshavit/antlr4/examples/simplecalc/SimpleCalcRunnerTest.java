@@ -1,10 +1,9 @@
 package com.yuvalshavit.antlr4.examples.simplecalc;
 
 import com.beust.jcommander.internal.Lists;
-import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
-import com.google.common.io.Resources;
+import com.yuvalshavit.antlr4.examples.util.ResourcesReader;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.CharStream;
@@ -20,20 +19,18 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
 
 public final class SimpleCalcRunnerTest {
-  private static final String pathBase = SimpleCalcRunnerTest.class.getPackage().getName().replace('.', '/');
+  private static final ResourcesReader resources = new ResourcesReader(SimpleCalcRunnerTest.class);
   private static final String TEST_PROVIDER = "test-provider-0";
 
   @DataProvider(name = TEST_PROVIDER)
   public Object[][] readParseFiles() {
-    Set<String> files = Sets.newHashSet(readFile("."));
+    Set<String> files = Sets.newHashSet(resources.readFile("."));
     List<Object[]> parseTests = Lists.newArrayList();
     for (String fileName : files) {
       if (fileName.endsWith(".simplecalc")) {
@@ -64,23 +61,11 @@ public final class SimpleCalcRunnerTest {
     assertEquals(actual, Integer.valueOf(testCase.expectedResult));
   }
 
-  private List<String> readFile(String relativePath) {
-    try {
-      return Resources.readLines(url(relativePath), Charsets.UTF_8);
-    } catch (IOException e) {
-      throw new AssertionError(e);
-    }
-  }
-
   private Case readCase(String fileName) {
-    List<String> lines = readFile(fileName);
+    List<String> lines = resources.readFile(fileName);
     int expected = Integer.parseInt(lines.get(0));
     String rest = Joiner.on('\n').join(lines.subList(1, lines.size()));
     return new Case(expected, rest);
-  }
-
-  private URL url(String fileName) {
-    return Resources.getResource(pathBase + "/" + fileName);
   }
 
   private static class Case {
