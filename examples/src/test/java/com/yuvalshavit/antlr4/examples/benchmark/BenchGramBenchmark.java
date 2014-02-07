@@ -20,9 +20,9 @@ import java.util.concurrent.TimeUnit;
 public class BenchGramBenchmark {
   private static final ResourcesReader resources = new ResourcesReader(BenchGramBenchmark.class);
   private static final String TEST_PROVIDER = "test-provider-0";
-  private static final long WARMUP = 100000;
-  public static final int WARMUP_REPS = 5;
-  private static final long RUNS = 1000000;
+  private static final long WARMUP = 3000;
+  public static final int WARMUP_REPS = 10;
+  private static final long RUNS = 25000;
 
   @DataProvider(name = TEST_PROVIDER)
   public Object[][] readParseFiles() {
@@ -30,26 +30,32 @@ public class BenchGramBenchmark {
     List<Object[]> parseTests = Lists.newArrayList();
     for (String fileName : files) {
       if (fileName.endsWith(".benchdent")) {
-        parseTests.add(new Object[] { fileName });
+        double multiplier = 1;
+        int dashIndex = fileName.indexOf("-");
+        if (dashIndex > 0) {
+          String num = fileName.substring(0, dashIndex);
+          multiplier = Double.parseDouble(num);
+        }
+        parseTests.add(new Object[] { fileName, multiplier });
       }
     }
     return parseTests.toArray(new Object[parseTests.size()][]);
   }
 
   @Test(dataProvider = TEST_PROVIDER)
-  public void dented(String fileName) {
+  public void dented(String fileName, double multiplier) {
     String source = resources.readFileToString(fileName);
-    warmupAndRun(BenchGramDentingLexer.class, source, standardLexerTokens);
+    warmupAndRun(BenchGramDentingLexer.class, source, standardLexerTokens, multiplier);
   }
 
   @Test(dataProvider = TEST_PROVIDER)
-  public void dentedRaw(String fileName) {
+  public void dentedRaw(String fileName, double multiplier) {
     String source = resources.readFileToString(fileName);
-    warmupAndRun(BenchGramDentingLexer.class, source, dentedRawTokens);
+    warmupAndRun(BenchGramDentingLexer.class, source, dentedRawTokens, multiplier);
   }
 
   @Test(dataProvider = TEST_PROVIDER)
-  public void braced(String fileName) {
+  public void braced(String fileName, double multiplier) {
     String dentedSource = resources.readFileToString(fileName);
     String bracedSource = GrammarForker.dentedToBraced(
       ParserUtils.getLexer(BenchGramDentingLexer.class, dentedSource),
@@ -58,22 +64,23 @@ public class BenchGramBenchmark {
       BenchGramDentingParser.NL,
       "\n");
 
-    warmupAndRun(BenchGramBracedLexer.class, bracedSource, standardLexerTokens);
+    warmupAndRun(BenchGramBracedLexer.class, bracedSource, standardLexerTokens, multiplier);
   }
 
   private <L extends Lexer> void warmupAndRun(Class<L> lexerClass, String source,
-                                              Function<? super L, Tokens> lexerToIter)
+                                              Function<? super L, Tokens> lexerToIter,
+                                              double multiplier)
   {
     System.out.printf("[%s]: %d tokens in %d chars%n",
       lexerClass.getSimpleName(),
       countTokens(lexerClass, source),
       source.toCharArray().length);
     for (int i = 0; i < WARMUP_REPS; ++i) {
-      timedRuns(lexerClass, source, "warmup " + i, WARMUP, lexerToIter);
+      timedRuns(lexerClass, source, "warmup " + i, Math.round(WARMUP * multiplier), lexerToIter);
     }
     System.out.println();
     System.out.println("Starting main runs...");
-    timedRuns(lexerClass, source, "runs", RUNS, lexerToIter);
+    timedRuns(lexerClass, source, "runs", Math.round(RUNS * multiplier), lexerToIter);
   }
 
   private <L extends Lexer> void timedRuns(Class<L> lexerClass, String braced, String runDesc, long nRuns,

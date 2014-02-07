@@ -1,0 +1,928 @@
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
+
+  anotherVar = 1 - getSomething()
+
+if anotherThingHappens()
+  aLocalVar = 0
+  if someValue() < anotherValueAltogether()
+    aLocalVar = 1
+  else
+    print(aLocalVar, 1, 3, 9)
+  while stillGoing()
+    goingCount = goingCount - 1
+    tryToDoSomething()
+    if checkForSuccess()
+      pretendValue = getSuccessValue()
+      if pretendValue < 200
+        print("error in the 100s range")
+      else if pretendValue > 200
+        print("error in the 300, 400 or 500s range")
+      else
+        print("wait, how did this become an html value?")
+      htmlValue = "false"
+      stringlyTypedValues = "need a better lexer/parser!"
+      setStillGoing(0)
