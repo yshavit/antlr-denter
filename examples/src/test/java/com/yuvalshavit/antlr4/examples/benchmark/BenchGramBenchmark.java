@@ -21,7 +21,7 @@ public class BenchGramBenchmark {
   private static final ResourcesReader resources = new ResourcesReader(BenchGramBenchmark.class);
   private static final String TEST_PROVIDER = "test-provider-0";
   private static final long WARMUP = 100000;
-  public static final int WARMUP_REPS = 10;
+  public static final int WARMUP_REPS = 5;
   private static final long RUNS = 1000000;
 
   @DataProvider(name = TEST_PROVIDER)
