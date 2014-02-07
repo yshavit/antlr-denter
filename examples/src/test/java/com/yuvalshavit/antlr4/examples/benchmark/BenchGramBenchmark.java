@@ -17,12 +17,28 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import static org.testng.Assert.fail;
+
 public class BenchGramBenchmark {
   private static final ResourcesReader resources = new ResourcesReader(BenchGramBenchmark.class);
+  private static final double globalMultiplier = getGlobalMultiplier();
+
   private static final String TEST_PROVIDER = "test-provider-0";
   private static final long WARMUP = 3000;
   public static final int WARMUP_REPS = 10;
   private static final long RUNS = 25000;
+
+  private static double getGlobalMultiplier() {
+    // Set this to a low number to make the benchmarks all go faster.
+    // This is useful when trying to find a good multiplier for a given benchdent program without having to wait
+    // for each benchmark to complete.
+    String globalMultiplierString = System.getProperty("benchgram.runs.multiplier");
+    if (globalMultiplierString == null) {
+      return 1;
+    } else {
+      return Double.parseDouble(globalMultiplierString);
+    }
+  }
 
   @DataProvider(name = TEST_PROVIDER)
   public Object[][] readParseFiles() {
@@ -76,25 +92,30 @@ public class BenchGramBenchmark {
       countTokens(lexerClass, source),
       source.toCharArray().length);
     for (int i = 0; i < WARMUP_REPS; ++i) {
-      timedRuns(lexerClass, source, "warmup " + i, Math.round(WARMUP * multiplier), lexerToIter);
+      timedRuns(lexerClass, source, "warmup " + i, Math.round(WARMUP * multiplier * globalMultiplier), lexerToIter);
     }
     System.out.println();
     System.out.println("Starting main runs...");
-    timedRuns(lexerClass, source, "runs", Math.round(RUNS * multiplier), lexerToIter);
+    double time = timedRuns(lexerClass, source, "runs", Math.round(RUNS * multiplier * globalMultiplier), lexerToIter);
     System.out.println();
     System.out.println();
+    fail(time + " ms per run"); // easy reporting.
   }
 
-  private <L extends Lexer> void timedRuns(Class<L> lexerClass, String braced, String runDesc, long nRuns,
+  private <L extends Lexer> double timedRuns(Class<L> lexerClass, String braced, String runDesc, long nRuns,
                          Function<? super L, Tokens> lexerToIter) {
     Stopwatch stopwatch = Stopwatch.createStarted();
     int randomresult = runLexer(lexerClass, braced, nRuns, lexerToIter);
+    stopwatch.stop();
     System.out.printf("[%s] %s resulted in random int: %d%n", lexerClass.getSimpleName(), runDesc, randomresult);
+    long timeMs = stopwatch.elapsed(TimeUnit.MILLISECONDS);
+    double timePerRunMs = ((double) timeMs) / nRuns;
     System.out.printf("[%s] time: %f ms each (%d ms total, %d runs)%n",
       lexerClass.getSimpleName(),
-      ((double)stopwatch.elapsed(TimeUnit.MILLISECONDS))/ nRuns,
-      stopwatch.elapsed(TimeUnit.MILLISECONDS),
+      timePerRunMs,
+      timeMs,
       nRuns);
+    return timePerRunMs;
   }
 
   private <L extends Lexer> int runLexer(Class<L> lexerClass, String source, long runs,
