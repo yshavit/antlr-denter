@@ -18,25 +18,31 @@ public final class GrammarForker {
 
   public static String dentedToBraced(Lexer lexer, int indent, int dedent, int nl, String nlReplacement) {
     StringBuilder sb = new StringBuilder();
-    int charsWritten = 0;
+    int indentation = 0;
+    int charsWrittenInLine = 0;
     for (Token t = lexer.nextToken(); t.getType() != Lexer.EOF; t = lexer.nextToken()) {
-      int expectCharsWritten = t.getStartIndex();
-      if (charsWritten < expectCharsWritten) {
-        addSpaces(sb, expectCharsWritten - charsWritten);
-      }
+      int expectCharsWritten = t.getCharPositionInLine();
       int tokenType = t.getType();
       if (tokenType == indent) {
         sb.append(INDENT_BRACE).append('\n');
-        charsWritten++;
+        ++indentation;
+        charsWrittenInLine = 0;
       } else if (tokenType == dedent) {
-        chomp(sb, '\n');
-        sb.append(' ').append(DEDENT_BRACE).append('\n');
+        --indentation;
+        addSpaces(sb, indentation * 2);
+        sb.append(DEDENT_BRACE).append('\n');
+        charsWrittenInLine = 0;
       } else if (tokenType == nl) {
         sb.append(nlReplacement);
-        charsWritten++;
+        charsWrittenInLine = 0;
       } else {
-        sb.append(t.getText());
-        charsWritten = t.getStopIndex() + 1;
+        if (charsWrittenInLine < expectCharsWritten) {
+          addSpaces(sb, expectCharsWritten - charsWrittenInLine);
+          charsWrittenInLine = expectCharsWritten;
+        }
+        String text = t.getText();
+        sb.append(text);
+        charsWrittenInLine += text.length();
       }
     }
     return sb.toString();
