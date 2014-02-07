@@ -23,6 +23,9 @@ public final class GrammarForker {
       if (templateFilePath == null) {
         break;
       }
+      if (destPath == null) {
+        destPath = new File(templateFilePath).getParent();
+      }
       destPath = prompt(reader, "destination dir", destPath);
       if (destPath == null) {
         break;
@@ -104,9 +107,8 @@ public final class GrammarForker {
 
     public String fork(String grammarName, String template) {
       String h = header.replace("${GRAMMAR_NAME}", grammarName);
-      return template
-        .replace("// ${FORKER_HEADER}", h)
-        .replace("// ${FORKER_TOKENS}", tokens);
+      String templateWithTokens = template.replace("// ${FORKER_TOKENS}", tokens);
+      return h + "\n" + templateWithTokens;
     }
   }
 }
