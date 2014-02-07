@@ -34,8 +34,8 @@ whileBlock: 'while' expr block;
 
 anonBlock: 'scoped' block;
 
-INDENT: '▶';
-DEDENT: '◀';
+INDENT: '{';
+DEDENT: '}';
 NL:     '\r'? '\n';
 
 

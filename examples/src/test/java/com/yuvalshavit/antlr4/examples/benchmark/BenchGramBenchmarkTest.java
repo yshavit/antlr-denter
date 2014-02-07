@@ -22,7 +22,7 @@ public class BenchGramBenchmarkTest {
   private static final String TEST_PROVIDER = "test-provider-0";
   private static final long WARMUP = 100000;
   public static final int WARMUP_REPS = 10;
-  private static final long RUNS = 1000000;
+  private static final long RUNS = 100000;
 
   @DataProvider(name = TEST_PROVIDER)
   public Object[][] readParseFiles() {
@@ -64,7 +64,10 @@ public class BenchGramBenchmarkTest {
   private <L extends Lexer> void warmupAndRun(Class<L> lexerClass, String source,
                                               Function<? super L, Tokens> lexerToIter)
   {
-    System.out.printf("[%s]: %d tokens%n", lexerClass.getSimpleName(), countTokens(lexerClass, source));
+    System.out.printf("[%s]: %d tokens in %d chars%n",
+      lexerClass.getSimpleName(),
+      countTokens(lexerClass, source),
+      source.toCharArray().length);
     for (int i = 0; i < WARMUP_REPS; ++i) {
       timedRuns(lexerClass, source, "warmup " + i, WARMUP, lexerToIter);
     }

@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public final class GrammarForker {
-  public static final String INDENT_BRACE = "▶";
-  public static final String DEDENT_BRACE = "◀";
+  public static final String INDENT_BRACE = "{";
+  public static final String DEDENT_BRACE = "}";
   private static final ResourcesReader resources = new ResourcesReader(GrammarForker.class);
 
   public static String dentedToBraced(Lexer lexer, int indent, int dedent, int nl, String nlReplacement) {

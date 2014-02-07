@@ -16,6 +16,10 @@ tokens { INDENT, DEDENT }
   public Token nextToken() {
     return denter.nextToken();
   }
+
+  public Token rawNextToken() {
+    return super.nextToken();
+  }
 }
 
 block: INDENT stat (NL stat)* DEDENT;
