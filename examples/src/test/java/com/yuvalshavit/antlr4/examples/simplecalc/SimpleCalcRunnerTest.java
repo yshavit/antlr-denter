@@ -3,18 +3,8 @@ package com.yuvalshavit.antlr4.examples.simplecalc;
 import com.beust.jcommander.internal.Lists;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
+import com.yuvalshavit.antlr4.examples.util.ParserUtils;
 import com.yuvalshavit.antlr4.examples.util.ResourcesReader;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.BaseErrorListener;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.DiagnosticErrorListener;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.RecognitionException;
-import org.antlr.v4.runtime.Recognizer;
-import org.antlr.v4.runtime.TokenStream;
-import org.antlr.v4.runtime.atn.PredictionMode;
-import org.antlr.v4.runtime.misc.Nullable;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -44,16 +34,7 @@ public final class SimpleCalcRunnerTest {
   public void checkExpr(String fileName) {
     Case testCase = readCase(fileName);
 
-    CharStream input = new ANTLRInputStream(testCase.source);
-    Lexer lexer = new SimpleCalcLexer(input);
-    lexer.addErrorListener(new AntlrFailureListener());
-    TokenStream tokens = new CommonTokenStream(lexer);
-
-    SimpleCalcParser parser = new SimpleCalcParser(tokens);
-    parser.getInterpreter().setPredictionMode(PredictionMode.LL_EXACT_AMBIG_DETECTION);
-    parser.removeErrorListeners(); // don't spit to stderr
-    parser.addErrorListener(new DiagnosticErrorListener());
-    parser.addErrorListener(new AntlrFailureListener());
+    SimpleCalcParser parser = ParserUtils.getParser(SimpleCalcLexer.class, SimpleCalcParser.class, testCase.source);
 
     ParseTree tree = parser.expr();
 
@@ -75,22 +56,6 @@ public final class SimpleCalcRunnerTest {
     private Case(int expectedResult, String source) {
       this.expectedResult = expectedResult;
       this.source = source;
-    }
-  }
-
-  private static class AntlrFailureListener extends BaseErrorListener {
-    @Override
-    public void syntaxError(Recognizer<?, ?> recognizer, @Nullable Object offendingSymbol, int line,
-                            int charPositionInLine, String msg, @Nullable RecognitionException e) {
-      throw new AntlrParseException(line, charPositionInLine, msg, e);
-    }
-  }
-
-  private static class AntlrParseException extends RuntimeException {
-    public AntlrParseException(int line, int posInLine, String msg, Throwable cause) {
-      // posInLine comes in 0-indexed, but we want to 1-index it so it lines up with what editors say (they
-      // tend to 1-index)
-      super(String.format("at line %d column %d: %s", line, posInLine+1, msg), cause);
     }
   }
 }

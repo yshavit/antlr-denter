@@ -1,6 +1,6 @@
 block: INDENT stat (NL stat)* DEDENT;
 
-stat: assign
+stat: assign 
     | ifBlock
     | whileBlock
     | anonBlock
@@ -10,19 +10,21 @@ expr: ID
     | INT
     | STRING
     | funcCall
+    | '(' expr ')'
     | expr ('*'|'/') expr
     | expr ('+'|'-') expr
-    | '(' expr ')'
+    | expr ('=='|'<'|'>'|'<='|'>='|'!=') expr
+    | ';'
     ;
 
 funcCall: ID '(' argsList? ')';
 
 argsList: expr (',' expr)*;
 
-assign: ID '==' expr NL;
+assign: ID '=' expr ';';
 
 ifBlock: 'if' expr 'then' block elseIfBlock?;
-elseIfBlock: 'else if' expr 'then' block elseBlock?;
+elseIfBlock: 'else' 'if' expr 'then' block elseBlock?;
 elseBlock: 'else' block;
 
 whileBlock: 'while' expr block;

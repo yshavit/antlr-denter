@@ -1,0 +1,9 @@
+myVar = unnamedVar + 3 * someMethod();
+while somethingHappens()
+  doAFunc();
+  localVar = 456;
+  localVar = myVar * localVar + 3;
+  if localVar < 3 then
+    localVar = myVar * localVar;
+  else if localVar > 9 then
+    localVar = 0;
