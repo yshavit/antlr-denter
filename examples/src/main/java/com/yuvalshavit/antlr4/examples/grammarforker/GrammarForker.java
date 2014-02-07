@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public final class GrammarForker {
+  public static final String INDENT_BRACE = "▶";
+  public static final String DEDENT_BRACE = "◀";
   private static final ResourcesReader resources = new ResourcesReader(GrammarForker.class);
 
   public static void main(String[] ignored) throws Exception {
@@ -102,7 +104,9 @@ public final class GrammarForker {
 
     private Forker(String headerFile, String tokensFile) {
       this.header = resources.readFileToString(headerFile);
-      this.tokens = resources.readFileToString(tokensFile);
+      this.tokens = resources.readFileToString(tokensFile)
+        .replace("${INDENT_BRACE}", INDENT_BRACE)
+        .replace("${DEDENT_BRACE}", DEDENT_BRACE);
     }
 
     public String fork(String grammarName, String template) {
