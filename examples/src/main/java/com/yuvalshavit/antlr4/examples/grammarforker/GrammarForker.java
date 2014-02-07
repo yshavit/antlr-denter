@@ -12,44 +12,45 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public final class GrammarForker {
-  public static final String INDENT_BRACE = "{";
+  public static final String INDENT_BRACE = " {";
   public static final String DEDENT_BRACE = "}";
   private static final ResourcesReader resources = new ResourcesReader(GrammarForker.class);
 
   public static String dentedToBraced(Lexer lexer, int indent, int dedent, int nl, String nlReplacement) {
     StringBuilder sb = new StringBuilder();
-    int indentation = 0;
+    int charsWritten = 0;
     for (Token t = lexer.nextToken(); t.getType() != Lexer.EOF; t = lexer.nextToken()) {
+      int expectCharsWritten = t.getStartIndex();
+      if (charsWritten < expectCharsWritten) {
+        addSpaces(sb, expectCharsWritten - charsWritten);
+      }
       int tokenType = t.getType();
       if (tokenType == indent) {
         sb.append(INDENT_BRACE).append('\n');
-        ++indentation;
-        indent(sb, indentation);
+        charsWritten++;
       } else if (tokenType == dedent) {
-        // dedent
-        chompSpace(sb);
-        chompSpace(sb);
-        sb.append(DEDENT_BRACE).append('\n');
-        --indentation;
+        chomp(sb, '\n');
+        sb.append(' ').append(DEDENT_BRACE).append('\n');
       } else if (tokenType == nl) {
         sb.append(nlReplacement);
-        indent(sb, indentation);
+        charsWritten++;
       } else {
-        sb.append(t.getText()).append(' ');
+        sb.append(t.getText());
+        charsWritten = t.getStopIndex() + 1;
       }
     }
     return sb.toString();
   }
 
-  private static void chompSpace(StringBuilder sb) {
-    if (sb.charAt(sb.length() - 1) == ' ') {
+  private static void chomp(StringBuilder sb, char chompWhat) {
+    if (sb.charAt(sb.length() - 1) == chompWhat) {
       sb.setLength(sb.length() - 1);
     }
   }
 
-  private static void indent(StringBuilder sb, int indentation) {
+  private static void addSpaces(StringBuilder sb, int indentation) {
     for (int i = 0; i < indentation; ++i) {
-      sb.append("  ");
+      sb.append(' ');
     }
   }
 
