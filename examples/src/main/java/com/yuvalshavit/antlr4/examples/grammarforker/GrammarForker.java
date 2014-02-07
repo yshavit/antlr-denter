@@ -18,19 +18,39 @@ public final class GrammarForker {
 
   public static String dentedToBraced(Lexer lexer, int indent, int dedent, int nl, String nlReplacement) {
     StringBuilder sb = new StringBuilder();
+    int indentation = 0;
     for (Token t = lexer.nextToken(); t.getType() != Lexer.EOF; t = lexer.nextToken()) {
       int tokenType = t.getType();
       if (tokenType == indent) {
-        sb.append(INDENT_BRACE);
+        sb.append(INDENT_BRACE).append('\n');
+        ++indentation;
+        indent(sb, indentation);
       } else if (tokenType == dedent) {
-        sb.append(DEDENT_BRACE);
+        // dedent
+        chompSpace(sb);
+        chompSpace(sb);
+        sb.append(DEDENT_BRACE).append('\n');
+        --indentation;
       } else if (tokenType == nl) {
         sb.append(nlReplacement);
+        indent(sb, indentation);
       } else {
-        sb.append(t.getText());
+        sb.append(t.getText()).append(' ');
       }
     }
     return sb.toString();
+  }
+
+  private static void chompSpace(StringBuilder sb) {
+    if (sb.charAt(sb.length() - 1) == ' ') {
+      sb.setLength(sb.length() - 1);
+    }
+  }
+
+  private static void indent(StringBuilder sb, int indentation) {
+    for (int i = 0; i < indentation; ++i) {
+      sb.append("  ");
+    }
   }
 
   public static void main(String[] ignored) throws Exception {

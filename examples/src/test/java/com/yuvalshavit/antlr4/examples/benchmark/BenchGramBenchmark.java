@@ -22,7 +22,7 @@ public class BenchGramBenchmark {
   private static final String TEST_PROVIDER = "test-provider-0";
   private static final long WARMUP = 100000;
   public static final int WARMUP_REPS = 10;
-  private static final long RUNS = 100000;
+  private static final long RUNS = 1000000;
 
   @DataProvider(name = TEST_PROVIDER)
   public Object[][] readParseFiles() {
@@ -56,7 +56,7 @@ public class BenchGramBenchmark {
       BenchGramDentingParser.INDENT,
       BenchGramDentingParser.DEDENT,
       BenchGramDentingParser.NL,
-      ";");
+      "\n");
 
     warmupAndRun(BenchGramBracedLexer.class, bracedSource, standardLexerTokens);
   }
