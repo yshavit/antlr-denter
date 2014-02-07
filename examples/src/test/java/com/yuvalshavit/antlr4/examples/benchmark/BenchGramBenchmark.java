@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-public class BenchGramBenchmarkTest {
-  private static final ResourcesReader resources = new ResourcesReader(BenchGramBenchmarkTest.class);
+public class BenchGramBenchmark {
+  private static final ResourcesReader resources = new ResourcesReader(BenchGramBenchmark.class);
   private static final String TEST_PROVIDER = "test-provider-0";
   private static final long WARMUP = 100000;
   public static final int WARMUP_REPS = 10;
