@@ -81,6 +81,8 @@ public class BenchGramBenchmark {
     System.out.println();
     System.out.println("Starting main runs...");
     timedRuns(lexerClass, source, "runs", Math.round(RUNS * multiplier), lexerToIter);
+    System.out.println();
+    System.out.println();
   }
 
   private <L extends Lexer> void timedRuns(Class<L> lexerClass, String braced, String runDesc, long nRuns,
