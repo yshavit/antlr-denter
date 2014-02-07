@@ -3,6 +3,8 @@ Python-like indentation tokens for ANTLR4
 
 A mostly-readymade solution to INDENT/DEDENT tokens in ANTLR v4. Just plug in the `DenterHelper` and you'll be good to go! See [this blog post](http://blog.yuvalshavit.com/2014/02/python-like-indentation-using-antlr4.html) for some of the motivations behind this project.
 
+antlr-helper is released under [the MIT license](http://opensource.org/licenses/MIT), which basically means you can do whatever you want with it. That said, I'd really appreciate hearing from you if you find this project useful! Maybe star the project?
+
 Usage
 =====
 
