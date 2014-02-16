@@ -141,6 +141,25 @@ public final class DenterHelperTest {
       .dented(NORMAL, NL, NORMAL, NL, NORMAL, NL, EOF_TOKEN);
   }
 
+  @Test
+  public void ignoreEofNoDedent() {
+    TokenChecker
+      .of("hello")
+      .raw(NORMAL, EOF_TOKEN)
+      .ignoreEof()
+      .dented(NORMAL, EOF_TOKEN);
+  }
+
+  @Test
+  public void ignoreEofWithDedent() {
+    TokenChecker
+      .of("hello")
+      .nl("  world")
+      .raw(NORMAL, NL, NORMAL, EOF_TOKEN)
+      .ignoreEof()
+      .dented(NORMAL, INDENT, NORMAL, EOF_TOKEN);
+  }
+
   private interface TokenBuilder {
     TokenBuilder nl(String line);
     TokenBuilder rf(String line);
@@ -148,12 +167,14 @@ public final class DenterHelperTest {
   }
 
   private interface DentChecker {
+    DentChecker ignoreEof();
     void dented(TokenType... expected);
   }
 
   private static class TokenChecker implements TokenBuilder, DentChecker {
     private int lineNo;
     private final List<Token> tokens = new ArrayList<>();
+    private boolean ignoreEof = false;
 
     private TokenChecker() {}
 
@@ -178,6 +199,12 @@ public final class DenterHelperTest {
     @Override
     public TokenBuilder rf(String line) {
       tokenize("\r\n", line);
+      return this;
+    }
+
+    @Override
+    public DentChecker ignoreEof() {
+      ignoreEof = true;
       return this;
     }
 
@@ -213,6 +240,9 @@ public final class DenterHelperTest {
     private List<Token> dent(List<Token> tokens) {
       final Iterator<Token> tokenIter = tokens.iterator();
       DenterHelper denter = new IterableBasedDenterHelper(NL.ordinal(), INDENT.ordinal(), DEDENT.ordinal(), tokenIter);
+      if (ignoreEof) {
+        denter.getOptions().ignoreEOF();
+      }
       List<Token> dented = new ArrayList<>();
       while(true) {
         Token token = denter.nextToken();

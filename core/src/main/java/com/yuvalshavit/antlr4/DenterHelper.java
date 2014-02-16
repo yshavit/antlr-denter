@@ -14,6 +14,7 @@ public abstract class DenterHelper {
   private final int indentToken;
   private final int dedentToken;
   private boolean reachedEof;
+  private EofHandler eofHandler = new StandardEofHandler();
 
   protected DenterHelper(int nlToken, int indentToken, int dedentToken) {
     this.nlToken = nlToken;
@@ -33,12 +34,16 @@ public abstract class DenterHelper {
     if (t.getType() == nlToken) {
       r = handleNewlineToken(t);
     } else if (t.getType() == Token.EOF) {
-      r = handleEof(t);
+      r = eofHandler.apply(t);
 
     } else {
       r = t;
     }
     return r;
+  }
+
+  public DenterOptions getOptions() {
+    return new DenterOptionsImpl();
   }
 
   protected abstract Token pullToken();
@@ -70,7 +75,7 @@ public abstract class DenterHelper {
       nextNext = pullToken();
     }
     if (nextNext.getType() == Token.EOF) {
-      return handleEof(nextNext);
+      return eofHandler.apply(nextNext);
     }
     // nextNext is now a non-NL token; we'll queue it up after any possible dents
 
@@ -93,19 +98,22 @@ public abstract class DenterHelper {
     return r;
   }
 
-  private Token handleEof(Token t) {
-    Token r;
-    // when we reach EOF, unwind all indentations. If there aren't any, insert a NL. This lets the grammar treat
-    // un-indented expressions as just being NL-terminated, rather than NL|EOF.
-    if (indentations.isEmpty()) {
-      r = createToken(nlToken, t);
-      dentsBuffer.add(t);
-    } else {
-      r = unwindTo(0, t);
-      dentsBuffer.add(t);
+  private final class StandardEofHandler implements EofHandler {
+    @Override
+    public Token apply(Token t) {
+      Token r;
+      // when we reach EOF, unwind all indentations. If there aren't any, insert a NL. This lets the grammar treat
+      // un-indented expressions as just being NL-terminated, rather than NL|EOF.
+      if (indentations.isEmpty()) {
+        r = createToken(nlToken, t);
+        dentsBuffer.add(t);
+      } else {
+        r = unwindTo(0, t);
+        dentsBuffer.add(t);
+      }
+      reachedEof = true;
+      return r;
     }
-    reachedEof = true;
-    return r;
   }
 
   private Token createToken(int tokenType, Token copyFrom) {
@@ -157,6 +165,24 @@ public abstract class DenterHelper {
     }
     indentations.push(targetIndent);
     return dentsBuffer.remove();
+  }
+
+  private interface EofHandler {
+    Token apply(Token t);
+  }
+
+  private class DenterOptionsImpl implements DenterOptions {
+    @Override
+    public void ignoreEOF() {
+      eofHandler = new EofHandler() {
+        @Override
+        public Token apply(Token t) {
+          reachedEof = true;
+          return t;
+        }
+      };
+    }
+
   }
 
   private static class InjectedToken extends CommonToken {
