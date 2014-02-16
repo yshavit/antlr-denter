@@ -94,7 +94,8 @@ public abstract class DenterHelper {
   }
 
   private Token handleEof(Token t) {
-    Token r;// when we reach EOF, unwind al indentations. If there aren't any, insert a NL. This lets the grammar treat
+    Token r;
+    // when we reach EOF, unwind all indentations. If there aren't any, insert a NL. This lets the grammar treat
     // un-indented expressions as just being NL-terminated, rather than NL|EOF.
     if (indentations.isEmpty()) {
       r = createToken(nlToken, t);
