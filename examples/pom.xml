@@ -70,7 +70,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.yuvalshavit</groupId>
   <artifactId>antlr-denter-examples</artifactId>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <name>Denter examples</name>
 
   <properties>
