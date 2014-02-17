@@ -7,7 +7,7 @@
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.yuvalshavit.antlr4</groupId>
+  <groupId>com.yuvalshavit</groupId>
   <artifactId>antlr-denter</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
