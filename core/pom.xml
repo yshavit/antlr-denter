@@ -1,21 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!-- maven central stuff -->
   <parent>
     <groupId>org.sonatype.oss</groupId>
     <artifactId>oss-parent</artifactId>
     <version>7</version>
     <relativePath />
   </parent>
-
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.yuvalshavit</groupId>
-  <artifactId>antlr-denter</artifactId>
-  <version>1.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
-
-  <name>Antlr Denter</name>
-  <description>Helper class for generating INDENT/DEDENT tokens with antlr4.</description>
-  <url>https://github.com/yshavit/antlr-denter</url>
-
   <licenses>
     <license>
       <name>The MIT License</name>
@@ -23,23 +13,16 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-
   <scm>
     <connection>scm:git:git@github.com:yshavit/antlr-denter.git</connection>
     <url>git@github.com:yshavit/antlr-denter.git</url>
     <developerConnection>scm:git:git@github.com:yshavit/antlr-denter.git</developerConnection>
   </scm>
-
   <developers>
     <developer>
       <name>Yuval Shavit</name>
     </developer>
   </developers>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-
   <profiles>
     <profile>
       <id>release-sign-artifacts</id>
@@ -65,10 +48,38 @@
               </execution>
             </executions>
           </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.2.1</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
         </plugins>
       </build>
     </profile>
   </profiles>
+  <!-- end maven central stuff -->
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.yuvalshavit</groupId>
+  <artifactId>antlr-denter</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>Antlr Denter</name>
+  <description>Helper class for generating INDENT/DEDENT tokens with antlr4.</description>
+  <url>https://github.com/yshavit/antlr-denter</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -107,19 +118,6 @@
             <Xlint />
           </compilerArguments>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>2.2.1</version>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
