@@ -8,6 +8,15 @@ antlr-helper is released under [the MIT license](http://opensource.org/licenses/
 Usage
 =====
 
+maven
+-----
+
+    <dependency>
+      <groupId>com.yuvalshavit</groupId>
+      <artifactId>antlr-denter</artifactId>
+      <version>1.0</version>
+    </dependency>
+
 Adding INDENT / DEDENT tokens to your lexer
 -------------------------------------------
 
@@ -93,19 +102,11 @@ The `DenterHelper` processor handles this by inserting two tokens: a `DEDENT` fo
 
 If your indentation scheme is anything like python's, chances are you want this to be a compilation error. The good news is that it will be, as long as your parser doesn't allow "spontaneous" indents. That is, if the example just before this paragraph fails, then so will the half-dedent example above. In both cases, the parser rules will bork on an unexpected `INDENT` token.
 
-Repo layout, maven stuff
-========================
+Repo layout
+===========
 
-tl;dr, for maven:
-
-    <dependency>
-      <groupId>com.yuvalshavit.antlr4</groupId>
-      <artifactId>antlr-denter</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
-
-- **core**: The real thing. This is what you're interested in.
-- **examples**: Contains a real-life example of a language that uses `DenterHelper`, so you can see a full solution, including the pom, how to set up the parser (which is nothing extra relative to usual antlr stuff) and how to define a language that uses these INDENT/DEDENT tokens. The language itself is pretty basic, but it should get the point across.
+- **core**: The real thing. This is what you're interested in. Maven artifact `antlr-denter`.
+- **examples**: Contains a real-life example of a language that uses `DenterHelper`, so you can see a full solution, including the pom, how to set up the parser (which is nothing extra relative to usual antlr stuff) and how to define a language that uses these INDENT/DEDENT tokens. The language itself is pretty basic, but it should get the point across. Maven artifact `antlr-denter-example-examples`.
 
 The maven run is as simple as `mvn install` (or your favorite goal).
 
