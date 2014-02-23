@@ -196,7 +196,7 @@ public abstract class DenterHelper {
     @Override
     public String getText() {
       if (type != null) {
-        setText(String.format("<%s (from %s)>", type, super.getText()));
+        setText(type);
       }
       return super.getText();
     }
