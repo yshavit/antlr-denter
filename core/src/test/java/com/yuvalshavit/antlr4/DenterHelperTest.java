@@ -160,6 +160,17 @@ public final class DenterHelperTest {
       .dented(NORMAL, INDENT, NORMAL, EOF_TOKEN);
   }
 
+  @Test
+  public void tabIndents() {
+    TokenChecker
+      .of("{")
+      .nl("\t\tline1")
+      .nl("\t\tline2")
+      .nl("}")
+      .raw(NORMAL, NL, NORMAL, NL, NORMAL, NL, NORMAL, EOF_TOKEN)
+      .dented(NORMAL, INDENT, NORMAL, NL, NORMAL, NL, DEDENT, NORMAL, NL, EOF_TOKEN);
+  }
+
   private interface TokenBuilder {
     TokenBuilder nl(String line);
     TokenBuilder rf(String line);
@@ -283,7 +294,7 @@ public final class DenterHelperTest {
 
   private static int leadingSpacesOf(String s) {
     for (int i = 0, len = s.length(); i < len; ++i) {
-      if (s.charAt(i) != ' ') {
+      if (!Character.isWhitespace(s.charAt(i))) {
         return i;
       }
     }
