@@ -27,6 +27,20 @@ public final class TabIndentsTest {
     assertEquals(actual, expected);
   }
 
+  @Test
+  public void tabbedGrammarCRLF() {
+    String content = "{\r\n\tline3\r\n\tline4\r\n}";
+    List<String> expected = Arrays.asList("line3", "line4");
+
+    TabIndentsParser parser = ParserUtils.getParser(TabIndentsLexer.class, TabIndentsParser.class, content);
+    TabIndentsParser.ExprContext expr = parser.expr();
+    List<String> actual = Lists.newArrayList();
+    for (TerminalNode numNode : expr.WORD()) {
+      actual.add(numNode.getText());
+    }
+    assertEquals(actual, expected);
+  }
+
   @Test(expectedExceptions = ParserUtils.AntlrParseException.class,
         expectedExceptionsMessageRegExp = "at line 1 column 2: mismatched input '\\\\n' expecting INDENT")
   public void tabbedGrammarInputUsesSpaces() {
