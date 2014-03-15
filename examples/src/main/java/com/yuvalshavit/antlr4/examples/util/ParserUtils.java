@@ -54,7 +54,7 @@ public class ParserUtils {
     }
   }
 
-  private static class AntlrParseException extends RuntimeException {
+  public static class AntlrParseException extends RuntimeException {
     public AntlrParseException(int line, int posInLine, String msg, Throwable cause) {
       // posInLine comes in 0-indexed, but we want to 1-index it so it lines up with what editors say (they
       // tend to 1-index)
