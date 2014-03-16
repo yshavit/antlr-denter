@@ -23,7 +23,7 @@ Adding INDENT / DEDENT tokens to your lexer
 1. Define INDENT and DEDENT tokens in your grammar
 2. In your `@lexer::members` section, instantiate a `DenterHelper` whose `pullToken` method delegates to your lexer's `super.nextToken()`
 3. Override your lexer's `super.nextToken` method to use `DenterHelper::nextToken` instead.
-4. Modify your `NL` token to also grab any whitespace that follows
+4. **Modify your `NL` token** to also grab any whitespace that follows (in other words, have it end in `' '*`, `'\t'*` or similar).
 
 `DenterHelper` is an abstract class, and it also takes three arguments for its constructor: the token types for newline, INDENT and DEDENT. It's probably easiest to instantiate it as an anonymous class. The whole thing should look something like this:
 
