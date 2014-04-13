@@ -201,4 +201,63 @@ public abstract class DenterHelper {
       return super.getText();
     }
   }
+
+  public interface Builder0 {
+    Builder1 nl(int nl);
+  }
+
+  public interface Builder1 {
+    Builder2 indent(int indent);
+  }
+
+  public interface Builder2 {
+    Builder3 dedent(int dedent);
+  }
+
+  public interface Builder3 {
+    DenterHelper pullToken(TokenPuller puller);
+  }
+
+  public interface TokenPuller {
+    Token pullToken();
+  }
+
+  public static Builder0 builder() {
+    return new BuilderImpl();
+  }
+
+  private static class BuilderImpl implements Builder0, Builder1, Builder2, Builder3 {
+    private int nl;
+    private int indent;
+    private int dedent;
+
+    @Override
+    public Builder1 nl(int nl) {
+      this.nl = nl;
+      return this;
+    }
+
+    @Override
+    public Builder2 indent(int indent) {
+      this.indent = indent;
+      return this;
+    }
+
+    @Override
+    public Builder3 dedent(int dedent) {
+      this.dedent = dedent;
+      return this;
+    }
+
+    @Override
+    public DenterHelper pullToken(TokenPuller puller) {
+      final TokenPuller p = puller;
+      return new DenterHelper(nl, indent, dedent) {
+        @Override
+        protected Token pullToken() {
+          return p.pullToken();
+        }
+      };
+    }
+  }
 }
