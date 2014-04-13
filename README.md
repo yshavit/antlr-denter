@@ -52,6 +52,27 @@ Adding INDENT / DEDENT tokens to your lexer
 
     NL: ('\r'? '\n' ' '*);
 
+There is also a builder available, which is especially useful for Java 8:
+
+    tokens { INDENT, DEDENT }
+    
+    @lexer::header {
+      import com.yuvalshavit.antlr4.DenterHelper;
+    }
+
+    @lexer::members {
+      private final DenterHelper denter = DenterHelper.builder()
+        .nl(NL)
+        .indent(MyCoolParser.INDENT)
+        .dedent(MyCoolParser.DEDENT)
+        .pullToken(MyCoolLexer.super::nextToken);
+    
+      @Override
+      public Token nextToken() {
+        return denter.nextToken();
+      }
+    }
+
 Using the tokens in your parser
 -------------------------------
 
