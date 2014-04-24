@@ -70,7 +70,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.yuvalshavit</groupId>
   <artifactId>antlr-denter</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1</version>
   <packaging>jar</packaging>
 
   <name>Antlr Denter</name>
