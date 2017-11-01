@@ -73,6 +73,8 @@ There is also a builder available, which is especially useful for Java 8:
       }
     }
 
+    NL: ('\r'? '\n' ' '*);
+
 Using the tokens in your parser
 -------------------------------
 
