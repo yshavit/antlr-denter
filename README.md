@@ -14,7 +14,7 @@ maven
     <dependency>
       <groupId>com.yuvalshavit</groupId>
       <artifactId>antlr-denter</artifactId>
-      <version>1.0</version>
+      <version>1.1</version>
     </dependency>
 
 Adding INDENT / DEDENT tokens to your lexer
