@@ -13,6 +13,7 @@ class TT(Enum):
     NORMAL = 3
     EOF_TOKEN = 4
 
+
 class TokenBuilder:
     def nl(self, line: str):
         pass
@@ -23,26 +24,29 @@ class TokenBuilder:
     def raw(self, expected: []):
         pass
 
+
 class DentChecker:
-    def ignoreEof(self):
+    def set_ignore_eof_true(self):
         pass
 
     def dented(self, expected: []):
         pass
 
+
 class LineBuilder:
-    def __init__(self, lineNo, builder: []):
-        self.lineNo = lineNo
+    def __init__(self, line_no, builder: []):
+        self.lineNo = line_no
         self.builder = builder
         self.pos = 0
 
-    def addToken(self, prefix: str, s: str, tokenType: TT):
-        token = CommonToken(type=tokenType.value)
+    def addToken(self, prefix: str, s: str, token_type: TT):
+        token = CommonToken(type=token_type.value)
         token.text = prefix + s
         token.column = self.pos
         token.line = self.lineNo
         self.pos += len(s)
         self.builder.append(token)
+
 
 class TokenChecker(TokenBuilder, DentChecker, unittest.TestCase):
 
@@ -53,14 +57,14 @@ class TokenChecker(TokenBuilder, DentChecker, unittest.TestCase):
         self.ignoreEOF = False
 
     @staticmethod
-    def of(firstLine: str):
+    def of(first_line: str):
         tb = TokenChecker()
-        lineBuilder = LineBuilder(0, tb.tokens)
-        leading = leadingSpacesOf(firstLine)
-        lineBuilder.pos = leading
-        firstLine = firstLine[leading:]
-        if firstLine:
-            lineBuilder.addToken("", firstLine, TT.NORMAL)
+        line_builder = LineBuilder(0, tb.tokens)
+        leading = leading_spaces_of(first_line)
+        line_builder.pos = leading
+        first_line = first_line[leading:]
+        if first_line:
+            line_builder.addToken("", first_line, TT.NORMAL)
         return tb
 
     def nl(self, line: str):
@@ -71,41 +75,41 @@ class TokenChecker(TokenBuilder, DentChecker, unittest.TestCase):
         self.tokenize("\r\n", line)
         return self
 
-    def ignoreEof(self):
+    def set_ignore_eof_true(self):
         self.ignoreEOF = True
         return self
 
     def dented(self, expected: []):
         dented = self.dent(self.tokens)
-        dentedTypes = self.tokensToTypes(dented)
-        self.assertEqual(expected, dentedTypes, "dented tokens")
+        dented_types = self.tokens_to_types(dented)
+        self.assertEqual(expected, dented_types, "dented tokens")
 
-    def tokensToTypes(self, tokens: []):
+    def tokens_to_types(self, tokens: []):
         types = []
         for t in tokens:
             if t.type == Token.EOF:
-                tokenType = TT.EOF_TOKEN
+                token_type = TT.EOF_TOKEN
             else:
-                tokenType = TT(t.type)
-            types.append(tokenType)
+                token_type = TT(t.type)
+            types.append(token_type)
         return types
 
-    def tokenize(self, nlChars: str, line: str):
+    def tokenize(self, nl_chars: str, line: str):
         self.lineNo += 1
-        lineBuilder = LineBuilder(self.lineNo, self.tokens)
-        leading = leadingSpacesOf(line)
-        lineBuilder.addToken(nlChars, line[0:leading], TT.NL)
+        line_builder = LineBuilder(self.lineNo, self.tokens)
+        leading = leading_spaces_of(line)
+        line_builder.addToken(nl_chars, line[0:leading], TT.NL)
         line = line[leading:]
         if line:
-            lineBuilder.addToken("", line, TT.NORMAL)
+            line_builder.addToken("", line, TT.NORMAL)
 
     def dent(self, tokens: []):
         denter = InterableBasedDenterHelper(TT.NL.value, TT.INDENT.value, TT.DEDENT.value, tokens)
         if self.ignoreEOF:
-            denter.shouldIgnoreEOF = True
+            denter.should_ignore_eof = True
         dented = []
         while True:
-            token = denter.nextToken()
+            token = denter.next_token()
             dented.append(token)
             if token.type == Token.EOF:
                 return dented
@@ -114,8 +118,8 @@ class TokenChecker(TokenBuilder, DentChecker, unittest.TestCase):
         token = CommonToken(type=Token.EOF)
         token.text = "<eof-token>"
         self.tokens.append(token)
-        rawTypes = self.tokensToTypes(self.tokens)
-        self.assertEqual(expected, rawTypes, "raw tokens")
+        raw_types = self.tokens_to_types(self.tokens)
+        self.assertEqual(expected, raw_types, "raw tokens")
         return self
 
     def reset(self):
@@ -123,7 +127,7 @@ class TokenChecker(TokenBuilder, DentChecker, unittest.TestCase):
         self.lineNo = 0
         self.ignoreEOF = False
 
-def leadingSpacesOf(s: str):
+def leading_spaces_of(s: str):
     for i in range(len(s)):
         if not s[i].isspace():
             return i
@@ -131,19 +135,18 @@ def leadingSpacesOf(s: str):
 
 
 class InterableBasedDenterHelper(DenterHelper):
-
-    def __init__(self, nlToken, indentToken, dedentToken, tokens: []):
-        super(InterableBasedDenterHelper, self).__init__(nlToken, indentToken, dedentToken, False)
+  
+    def __init__(self, nl_token, indent_token, dedent_token, tokens: []):
+        super(InterableBasedDenterHelper, self).__init__(nl_token, indent_token, dedent_token, False)
         self.tokens = tokens
         self.currentIndex = -1
 
-    def pullToken(self):
+    def pull_token(self):
         self.currentIndex += 1
         return self.tokens[self.currentIndex]
 
 
 class DenterHelperTest(unittest.TestCase):
-
 
     def test_simple(self):
         TokenChecker()\
@@ -152,8 +155,7 @@ class DenterHelperTest(unittest.TestCase):
             .raw([TT.NORMAL, TT.NL, TT.NORMAL, TT.EOF_TOKEN])\
             .dented([TT.NORMAL, TT.INDENT, TT.NORMAL, TT.NL, TT.DEDENT, TT.EOF_TOKEN])
 
-
-    def test_simpleWithNLs(self):
+    def test_simple_with_newlines(self):
         TokenChecker()\
             .of("hello")\
             .nl("world")\
@@ -162,7 +164,7 @@ class DenterHelperTest(unittest.TestCase):
             .raw([TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.EOF_TOKEN])\
             .dented([TT.NORMAL, TT.NL, TT.NORMAL, TT.INDENT, TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.DEDENT, TT.EOF_TOKEN])
 
-    def test_multipleDedents(self):
+    def test_multiple_dedents(self):
         TokenChecker()\
             .of("hello")\
             .nl("  line2")\
@@ -171,7 +173,7 @@ class DenterHelperTest(unittest.TestCase):
             .raw([TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.EOF_TOKEN])\
             .dented([TT.NORMAL, TT.INDENT, TT.NORMAL, TT.INDENT, TT.NORMAL, TT.NL, TT.DEDENT, TT.DEDENT, TT.NORMAL, TT.NL, TT.EOF_TOKEN])
 
-    def test_multipleDedentsWithSameLine(self):
+    def test_multiple_dedents_with_same_line(self):
         TokenChecker() \
             .of("hello") \
             .nl("  line2") \
@@ -181,7 +183,7 @@ class DenterHelperTest(unittest.TestCase):
             .raw([TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.EOF_TOKEN]) \
             .dented([TT.NORMAL, TT.INDENT, TT.NORMAL, TT.NL, TT.NORMAL, TT.INDENT, TT.NORMAL, TT.NL, TT.DEDENT, TT.DEDENT, TT.NORMAL, TT.NL, TT.EOF_TOKEN])
 
-    def test_multipleDedentsToEof(self):
+    def test_multiple_dedents_to_eof(self):
         TokenChecker()\
             .of("hello")\
             .nl("  line2")\
@@ -189,7 +191,7 @@ class DenterHelperTest(unittest.TestCase):
             .raw([TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.EOF_TOKEN])\
             .dented([TT.NORMAL, TT.INDENT, TT.NORMAL, TT.INDENT, TT.NORMAL, TT.NL, TT.DEDENT, TT.DEDENT, TT.EOF_TOKEN])
 
-    def test_ignoreBlankLines(self):
+    def test_ignore_blank_lines(self):
         TokenChecker()\
             .of("hello")\
             .nl("     ")\
@@ -202,7 +204,7 @@ class DenterHelperTest(unittest.TestCase):
             .raw([TT.NORMAL, TT.NL, TT.NL, TT.NL, TT.NORMAL, TT.NL, TT.NL, TT.NL, TT.NL, TT.NORMAL, TT.EOF_TOKEN])\
             .dented([TT.NORMAL, TT.INDENT, TT.NORMAL, TT.NL, TT.DEDENT, TT.NORMAL, TT.NL, TT.EOF_TOKEN])
 
-    def test_allIndented(self):
+    def test_all_indented(self):
         TokenChecker()\
             .of("    hello")\
             .nl("    line2")\
@@ -211,7 +213,7 @@ class DenterHelperTest(unittest.TestCase):
             .raw([TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.EOF_TOKEN])\
             .dented([TT.INDENT, TT.NORMAL, TT.NL, TT.NORMAL, TT.INDENT, TT.NORMAL, TT.NL, TT.DEDENT, TT.DEDENT, TT.EOF_TOKEN])
 
-    def test_startIndentedThenEmptyLines(self):
+    def test_start_indented_then_empty_lines(self):
         TokenChecker()\
             .of("    hello")\
             .nl("    line2")\
@@ -219,7 +221,7 @@ class DenterHelperTest(unittest.TestCase):
             .raw([TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.EOF_TOKEN])\
             .dented([TT.INDENT, TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.DEDENT, TT.EOF_TOKEN])
 
-    def test_detentToNegative(self):
+    def test_detent_to_negative(self):
         #this shouldn't explode, it should just result in an extra dedent
         TokenChecker()\
             .of("    hello")\
@@ -228,7 +230,7 @@ class DenterHelperTest(unittest.TestCase):
             .raw([TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.EOF_TOKEN])\
             .dented([TT.INDENT, TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.DEDENT, TT.NORMAL, TT.NL, TT.EOF_TOKEN])
 
-    def test_halfDent(self):
+    def test_half_dent(self):
         TokenChecker()\
             .of("hello")\
             .nl("     world")\
@@ -236,7 +238,7 @@ class DenterHelperTest(unittest.TestCase):
             .raw([TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.EOF_TOKEN])\
             .dented([TT.NORMAL, TT.INDENT, TT.NORMAL, TT.NL, TT.DEDENT, TT.INDENT, TT.NORMAL, TT.NL, TT.DEDENT, TT.EOF_TOKEN])
 
-    def test_halfDentFromTwo(self):
+    def test_half_dent_from_two(self):
         TokenChecker()\
             .of("hello")\
             .nl("     world")\
@@ -245,7 +247,7 @@ class DenterHelperTest(unittest.TestCase):
             .raw([TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.EOF_TOKEN])\
             .dented([TT.NORMAL, TT.INDENT, TT.NORMAL, TT.INDENT, TT.NORMAL, TT.NL, TT.DEDENT, TT.DEDENT, TT.INDENT, TT.NORMAL, TT.NL, TT.DEDENT, TT.EOF_TOKEN])
 
-    def test_withReturn(self):
+    def test_with_return(self):
         TokenChecker()\
             .of("hello")\
             .nl("world")\
@@ -253,22 +255,22 @@ class DenterHelperTest(unittest.TestCase):
             .raw([TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.EOF_TOKEN])\
             .dented([TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.EOF_TOKEN])
 
-    def test_ignoreEofNoDedents(self):
+    def test_ignore_eof_no_dedents(self):
         TokenChecker()\
             .of("hello")\
             .raw([TT.NORMAL, TT.EOF_TOKEN])\
-            .ignoreEof()\
+            .set_ignore_eof_true()\
             .dented([TT.NORMAL, TT.EOF_TOKEN])
 
-    def test_ignoreEofWithDedents(self):
+    def test_ignore_eof_with_dedents(self):
         TokenChecker()\
             .of("hello")\
             .nl("  world")\
             .raw([TT.NORMAL, TT.NL, TT.NORMAL, TT.EOF_TOKEN])\
-            .ignoreEof()\
+            .set_ignore_eof_true()\
             .dented([TT.NORMAL, TT.INDENT, TT.NORMAL, TT.EOF_TOKEN])
 
-    def test_tabIndents(self):
+    def test_tab_indents(self):
         TokenChecker()\
             .of("{")\
             .nl("\t\tline1")\
@@ -276,6 +278,17 @@ class DenterHelperTest(unittest.TestCase):
             .nl("}")\
             .raw([TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.EOF_TOKEN])\
             .dented([TT.NORMAL, TT.INDENT, TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.DEDENT, TT.NORMAL, TT.NL, TT.EOF_TOKEN])
+
+    def test_back_and_forth(self):
+        TokenChecker()\
+            .of("hello")\
+            .nl("  world")\
+            .nl("    this")\
+            .nl("test")\
+            .nl("  is")\
+            .nl("    great")\
+            .raw([TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.NL, TT.NORMAL, TT.EOF_TOKEN])\
+            .dented([TT.NORMAL, TT.INDENT, TT.NORMAL, TT.INDENT, TT.NORMAL, TT.NL, TT.DEDENT, TT.DEDENT, TT.NORMAL, TT.INDENT, TT.NORMAL, TT.INDENT, TT.NORMAL, TT.NL, TT.DEDENT, TT.DEDENT,TT.EOF_TOKEN])
 
     if __name__ == '__main__':
         unittest.main()
