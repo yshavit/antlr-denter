@@ -97,7 +97,7 @@ denter = None
 
 def nextToken(self):
     if not self.denter:
-        self.denter = self.MyCoolDenter(self, self.NEWLINE, MyCoolParser.INDENT, MyCoolParser.DEDENT, ***Should Ignore EOF***)
+        self.denter = self.MyCoolDenter(self, self.NL, MyCoolParser.INDENT, MyCoolParser.DEDENT, ***Should Ignore EOF***)
     return self.denter.next_token()
 
 }
