@@ -67,7 +67,7 @@ class DenterHelper(object):
             r = self.create_token(self.indent_token, t)
             self.indentations.insert(0, indent)
         else:
-            r = self.unwindTo(indent, t)
+            r = self.unwind_to(indent, t)
         self.dents_buffer.append(next_next)
         return r
 
@@ -89,7 +89,7 @@ class DenterHelper(object):
         new_token.text = token_type_str
         return new_token
 
-    def unwindTo(self, target_indent, copy_from : CommonToken):
+    def unwind_to(self, target_indent, copy_from : CommonToken):
         self.dents_buffer.append(self.create_token(self.nl_token, copy_from))
         while True:
             prev_indent = self.indentations.pop(0)
@@ -114,7 +114,7 @@ class DenterHelper(object):
                 r = self.create_token(self.nl_token, t)
                 self.dents_buffer.append(t)
             else:
-                r = self.unwindTo(0, t)
+                r = self.unwind_to(0, t)
                 self.dents_buffer.append(t)
             self.reached_eof = True
             return r
