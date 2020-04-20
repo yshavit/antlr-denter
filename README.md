@@ -5,7 +5,7 @@ A mostly-readymade solution to INDENT/DEDENT tokens in ANTLR v4. Just plug in th
 
 antlr-helper is released under [the MIT license](http://opensource.org/licenses/MIT), which basically means you can do whatever you want with it. That said, I'd really appreciate hearing from you if you find this project useful! Maybe star the project?
 
-Usage
+Usage (Java)
 =====
 
 maven
@@ -74,6 +74,34 @@ There is also a builder available, which is especially useful for Java 8:
     }
 
     NL: ('\r'? '\n' ' '*);
+	
+Usage (Python3)
+=====
+```
+tokens { INDENT, DEDENT }
+
+@lexer::header{
+from DenterHelper import DenterHelper
+from MyCoolParser import MyCoolParser
+}
+@lexer::members {
+class MyCoolDenter(DenterHelper):
+    def __init__(self, lexer, nl_token, indent_token, dedent_token, ignore_eof):
+        super().__init__(nl_token, indent_token, dedent_token, ignore_eof)
+        self.lexer: MyCoolLexer = lexer
+
+    def pull_token(self):
+        return super(MyCoolLexer, self.lexer).nextToken()
+
+denter = None
+
+def nextToken(self):
+    if not self.denter:
+        self.denter = self.MyCoolDenter(self, self.NL, MyCoolParser.INDENT, MyCoolParser.DEDENT, ***Should Ignore EOF***)
+    return self.denter.next_token()
+
+}
+```
 
 Using the tokens in your parser
 -------------------------------
@@ -127,13 +155,12 @@ If your indentation scheme is anything like python's, chances are you want this 
 
 Repo layout
 ===========
-
-- **core**: The real thing. This is what you're interested in. Maven artifact `antlr-denter`.
-- **examples**: Contains a real-life example of a language that uses `DenterHelper`, so you can see a full solution, including the pom, how to set up the parser (which is nothing extra relative to usual antlr stuff) and how to define a language that uses these INDENT/DEDENT tokens. The language itself is pretty basic, but it should get the point across. Maven artifact `antlr-denter-example-examples`.
+- **Java/core**: The real thing. This is what you're interested in. Maven artifact `antlr-denter`.
+- **Java/examples**: Contains a real-life example of a language that uses `DenterHelper`, so you can see a full solution, including the pom, how to set up the parser (which is nothing extra relative to usual antlr stuff) and how to define a language that uses these INDENT/DEDENT tokens. The language itself is pretty basic, but it should get the point across. Maven artifact `antlr-denter-example-examples`.
+- **Python3**: The python3 implementation
 
 The maven run is as simple as `mvn install` (or your favorite goal).
 
 Comments? Suggestions? Bugs?
 ============================
 Don't be shy about opening an issue!
-
