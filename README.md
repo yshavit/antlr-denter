@@ -5,7 +5,7 @@ A mostly-readymade solution to INDENT/DEDENT tokens in ANTLR v4. Just plug in th
 
 antlr-helper is released under [the MIT license](http://opensource.org/licenses/MIT), which basically means you can do whatever you want with it. That said, I'd really appreciate hearing from you if you find this project useful! Maybe star the project?
 
-Usage
+Usage (Java)
 =====
 
 maven
@@ -74,7 +74,32 @@ There is also a builder available, which is especially useful for Java 8:
     }
 
     NL: ('\r'? '\n' ' '*);
+	
+Usage (Python3)
+=====
+```
+@lexer::header{
+from DenterHelper import DenterHelper
+from MyCoolParser import MyCoolParser
+}
+@lexer::members {
+class MyCoolDenter(DenterHelper.DenterHelper):
+    def __init__(self, lexer, nlToken, indentToken, dedentToken, ignoreEOF):
+        super().__init__(nlToken, indentToken, dedentToken, ignoreEOF)
+        self.lexer: MyCoolLexer = lexer
 
+    def pullToken(self):
+        return super(MyCoolLexer, self.lexer).nextToken()
+
+denter = None
+
+def nextToken(self):
+    if not self.denter:
+        self.denter = self.MyCoolDenter(self, self.NL, MyCoolParser.INDENT, MyCoolParser.DEDENT, False)
+    return self.denter.nextToken()
+
+}
+```
 Using the tokens in your parser
 -------------------------------
 
