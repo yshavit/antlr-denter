@@ -127,7 +127,6 @@ class TokenChecker(TokenBuilder, DentChecker, unittest.TestCase):
         self.lineNo = 0
         self.ignoreEOF = False
 
-
 def leading_spaces_of(s: str):
     for i in range(len(s)):
         if not s[i].isspace():
@@ -136,7 +135,7 @@ def leading_spaces_of(s: str):
 
 
 class InterableBasedDenterHelper(DenterHelper):
-
+  
     def __init__(self, nl_token, indent_token, dedent_token, tokens: []):
         super(InterableBasedDenterHelper, self).__init__(nl_token, indent_token, dedent_token, False)
         self.tokens = tokens
