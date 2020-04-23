@@ -1,0 +1,8 @@
+setup.py
+antlr_denter/DenterHelper.py
+antlr_denter/__init__.py
+antlr_denter.egg-info/PKG-INFO
+antlr_denter.egg-info/SOURCES.txt
+antlr_denter.egg-info/dependency_links.txt
+antlr_denter.egg-info/requires.txt
+antlr_denter.egg-info/top_level.txt

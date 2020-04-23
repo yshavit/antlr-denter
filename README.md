@@ -77,11 +77,18 @@ There is also a builder available, which is especially useful for Java 8:
 	
 Usage (Python3)
 =====
+
+pip
+-----
+```
+pip install antlr-denter
+```
+Next, in Antlr put:
 ```
 tokens { INDENT, DEDENT }
 
 @lexer::header{
-from DenterHelper import DenterHelper
+from antlr_denter.DenterHelper import DenterHelper
 from MyCoolParser import MyCoolParser
 }
 @lexer::members {
@@ -101,6 +108,8 @@ def nextToken(self):
     return self.denter.next_token()
 
 }
+
+NL: ('\r'? '\n' ' '*); #For tabs just switch out ' '* with '\t'*
 ```
 
 Using the tokens in your parser
