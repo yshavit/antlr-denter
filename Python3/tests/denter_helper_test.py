@@ -2,8 +2,7 @@ import unittest
 from enum import Enum
 from antlr4.Token import CommonToken
 from antlr4.Token import Token
-
-from DenterHelper import DenterHelper
+from antlr_denter.DenterHelper import DenterHelper
 
 
 class TT(Enum):
