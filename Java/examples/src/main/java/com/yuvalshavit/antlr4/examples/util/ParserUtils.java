@@ -11,7 +11,6 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.atn.PredictionMode;
-import org.antlr.v4.runtime.misc.Nullable;
 
 public class ParserUtils {
   private ParserUtils() {}
@@ -48,8 +47,7 @@ public class ParserUtils {
 
   private static class AntlrFailureListener extends BaseErrorListener {
     @Override
-    public void syntaxError(Recognizer<?, ?> recognizer, @Nullable Object offendingSymbol, int line,
-                            int charPositionInLine, String msg, @Nullable RecognitionException e) {
+    public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
       throw new AntlrParseException(line, charPositionInLine, msg, e);
     }
   }
