@@ -8,6 +8,8 @@ antlr-helper is released under [the MIT license](http://opensource.org/licenses/
 Usage (Java)
 =====
 
+![Java CI with Maven](https://github.com/yshavit/antlr-denter/workflows/Java%20CI%20with%20Maven/badge.svg)
+
 maven
 -----
 
@@ -77,6 +79,8 @@ There is also a builder available, which is especially useful for Java 8:
 	
 Usage (Python3)
 =====
+
+![Python package](https://github.com/yshavit/antlr-denter/workflows/Python%20package/badge.svg)
 
 pip
 -----
