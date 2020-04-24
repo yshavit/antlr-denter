@@ -82,6 +82,8 @@ Usage (Python3)
 
 ![Python package](https://github.com/yshavit/antlr-denter/workflows/Python%20package/badge.svg)
 
+Big thanks to [@Bluepuff71](https://github.com/Bluepuff71) for porting this to Python!
+
 pip
 -----
 ```
