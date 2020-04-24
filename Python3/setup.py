@@ -1,6 +1,7 @@
 import setuptools
+import os
 
-with open("../README.md", "r") as fh:
+with open("%s/../README.md" % os.environ['PWD'], "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
