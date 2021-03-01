@@ -118,6 +118,43 @@ def nextToken(self):
 NL: ('\r'? '\n' ' '*); #For tabs just switch out ' '* with '\t'*
 ```
 
+Usage (CSharp)
+=====
+
+![Build/Tests](https://github.com/yshavit/antlr-denter/workflows/CSharp/badge.svg)
+
+NuGet
+-----
+> TODO
+
+In Antlr:
+```antlrv4
+tokens { INDENT, DEDENT }
+
+@lexer::header {
+using AntlrDenter.DenterHelper;
+}
+
+@lexer::members {
+private DenterHelper denter;
+  
+public override IToken NextToken()
+{
+    if (denter == null)
+    {
+        denter = DenterHelper.Builder()
+            .Nl(EOL)
+            .Indent(ArgScriptParser.INDENT)
+            .Dedent(ArgScriptParser.DEDENT)
+            .PullToken(base.NextToken);
+    }
+
+    return denter
+        .NextToken();
+}
+}
+```
+
 Using the tokens in your parser
 -------------------------------
 
