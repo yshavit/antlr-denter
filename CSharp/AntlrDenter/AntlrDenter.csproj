@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <Title>antlr-denter in C#</Title>
+        <Authors>Yannis Paetzelt</Authors>
+        <Description>Port of antlr-denter in C#</Description>
+        <RepositoryUrl>https://github.com/yshavit/antlr-denter</RepositoryUrl>
+        <RepositoryType>Git</RepositoryType>
+        <PackageTags>ANTLR, Indentation, Indent</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Antlr4.Runtime" Version="4.6.6" />
+    </ItemGroup>
+
+</Project>
