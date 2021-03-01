@@ -143,9 +143,9 @@ public override IToken NextToken()
     if (denter == null)
     {
         denter = DenterHelper.Builder()
-            .Nl(EOL)
-            .Indent(ArgScriptParser.INDENT)
-            .Dedent(ArgScriptParser.DEDENT)
+            .Nl(NL)
+            .Indent(MyCoolParser.INDENT)
+            .Dedent(MyCoolParser.DEDENT)
             .PullToken(base.NextToken);
     }
 
@@ -153,6 +153,8 @@ public override IToken NextToken()
         .NextToken();
 }
 }
+
+NL: ('\r'? '\n' ' '*); #For tabs just switch out ' '* with '\t'*
 ```
 
 Using the tokens in your parser
