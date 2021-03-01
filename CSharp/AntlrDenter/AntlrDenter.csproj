@@ -2,9 +2,9 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <Title>antlr-denter in C#</Title>
+        <Title>AntlrDenter</Title>
         <Authors>Yannis Paetzelt</Authors>
-        <Description>Port of antlr-denter in C#</Description>
+        <Description>antlr-denter in C#</Description>
         <RepositoryUrl>https://github.com/yshavit/antlr-denter</RepositoryUrl>
         <RepositoryType>Git</RepositoryType>
         <PackageTags>ANTLR, Indentation, Indent</PackageTags>
