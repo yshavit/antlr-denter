@@ -123,6 +123,8 @@ Usage (CSharp)
 
 ![Build/Tests](https://github.com/yshavit/antlr-denter/workflows/CSharp/badge.svg)
 
+Credit to [@K2017](https://github.com/K2017) for this port.
+
 NuGet
 -----
 > TODO
