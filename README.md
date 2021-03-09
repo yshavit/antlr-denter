@@ -151,13 +151,14 @@ public override IToken NextToken()
             .PullToken(base.NextToken);
     }
 
-    return denter
-        .NextToken();
+    return denter.NextToken();
 }
 }
 
 NL: ('\r'? '\n' ' '*); #For tabs just switch out ' '* with '\t'*
 ```
+
+Note the injected code is dedented with respect to the `@lexer::members` block. This is so that it has the proper formatting in the resulting C# Lexer file.
 
 Using the tokens in your parser
 -------------------------------
@@ -214,6 +215,7 @@ Repo layout
 - **Java/core**: The real thing. This is what you're interested in. Maven artifact `antlr-denter`.
 - **Java/examples**: Contains a real-life example of a language that uses `DenterHelper`, so you can see a full solution, including the pom, how to set up the parser (which is nothing extra relative to usual antlr stuff) and how to define a language that uses these INDENT/DEDENT tokens. The language itself is pretty basic, but it should get the point across. Maven artifact `antlr-denter-example-examples`.
 - **Python3**: The python3 implementation
+- **CSharp**: The C# implementation; to be used as a class library in your projects.
 
 The maven run is as simple as `mvn install` (or your favorite goal).
 
