@@ -76,15 +76,11 @@ Java
 
 ![Java CI with Maven](https://github.com/yshavit/antlr-denter/workflows/Java%20CI%20with%20Maven/badge.svg)
 
-### maven
-
     <dependency>
       <groupId>com.yuvalshavit</groupId>
       <artifactId>antlr-denter</artifactId>
       <version>1.1</version>
     </dependency>
-
-### Adding INDENT / DEDENT tokens to your lexer
 
 1. Define INDENT and DEDENT tokens in your grammar
 2. In your `@lexer::members` section, instantiate a `DenterHelper` whose `pullToken` method delegates to your lexer's `super.nextToken()`
@@ -148,11 +144,10 @@ Python3
 
 Big thanks to [@Bluepuff71](https://github.com/Bluepuff71) for porting this to Python!
 
-pip
------
 ```
 pip install antlr-denter
 ```
+
 Next, in Antlr put:
 ```
 tokens { INDENT, DEDENT }
