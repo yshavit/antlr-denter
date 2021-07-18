@@ -184,10 +184,6 @@ CSharp
 
 Credit to [@K2017](https://github.com/K2017) for this port.
 
-NuGet
------
-> TODO
-
 In Antlr:
 ```antlrv4
 tokens { INDENT, DEDENT }
