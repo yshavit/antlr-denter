@@ -22,7 +22,7 @@ tokens { INDENT, DEDENT }
   }
 }
 
-block: INDENT stat (NL stat)* DEDENT;
+block: INDENT stat+ DEDENT;
 
 stat: assign 
     | ifBlock
@@ -45,7 +45,7 @@ funcCall: ID '(' argsList? ')';
 
 argsList: expr (',' expr)*;
 
-assign: ID '=' expr ';';
+assign: ID '=' expr ';' NL;
 
 ifBlock: 'if' expr 'then' block elseIfBlock?;
 elseIfBlock: 'else' 'if' expr 'then' block elseBlock?;
