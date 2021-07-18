@@ -76,8 +76,7 @@ Java
 
 ![Java CI with Maven](https://github.com/yshavit/antlr-denter/workflows/Java%20CI%20with%20Maven/badge.svg)
 
-maven
------
+### maven
 
     <dependency>
       <groupId>com.yuvalshavit</groupId>
@@ -85,8 +84,7 @@ maven
       <version>1.1</version>
     </dependency>
 
-Adding INDENT / DEDENT tokens to your lexer
--------------------------------------------
+### Adding INDENT / DEDENT tokens to your lexer
 
 1. Define INDENT and DEDENT tokens in your grammar
 2. In your `@lexer::members` section, instantiate a `DenterHelper` whose `pullToken` method delegates to your lexer's `super.nextToken()`
