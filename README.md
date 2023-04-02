@@ -1,3 +1,6 @@
+> **Note**
+> This project is archived, as I am no longer working on the project that requires it. It should still work — I just don't feel like updating its dependencies for upstream security patches. As of the time of this writing (April 2023), the only security vulnerabilities are in the unit tests.
+
 Python-like indentation tokens for ANTLR4
 =========================================
 
